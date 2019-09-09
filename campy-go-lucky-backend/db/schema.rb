@@ -10,50 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_09_213845) do
+ActiveRecord::Schema.define(version: 2019_09_09_223110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "campsites", force: :cascade do |t|
     t.string "name"
-    t.bigint "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["city_id"], name: "index_campsites_on_city_id"
   end
 
   create_table "campstops", force: :cascade do |t|
     t.bigint "campsite_id"
     t.bigint "trip_id"
+    t.string "state_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["campsite_id"], name: "index_campstops_on_campsite_id"
     t.index ["trip_id"], name: "index_campstops_on_trip_id"
   end
 
-  create_table "cities", force: :cascade do |t|
-    t.integer "latitude"
-    t.integer "longitude"
-    t.string "city_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "trails", force: :cascade do |t|
     t.string "name"
-    t.bigint "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["city_id"], name: "index_trails_on_city_id"
   end
 
   create_table "trips", force: :cascade do |t|
     t.bigint "user_id"
     t.string "name"
+    t.datetime "start_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_trips_on_user_id"
+  end
+
+  create_table "triptrails", force: :cascade do |t|
+    t.bigint "trip_id"
+    t.bigint "trail_id"
+    t.string "state_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trail_id"], name: "index_triptrails_on_trail_id"
+    t.index ["trip_id"], name: "index_triptrails_on_trip_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -62,20 +62,9 @@ ActiveRecord::Schema.define(version: 2019_09_09_213845) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "waypoints", force: :cascade do |t|
-    t.bigint "trip_id"
-    t.bigint "city_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["city_id"], name: "index_waypoints_on_city_id"
-    t.index ["trip_id"], name: "index_waypoints_on_trip_id"
-  end
-
-  add_foreign_key "campsites", "cities"
   add_foreign_key "campstops", "campsites"
   add_foreign_key "campstops", "trips"
-  add_foreign_key "trails", "cities"
   add_foreign_key "trips", "users"
-  add_foreign_key "waypoints", "cities"
-  add_foreign_key "waypoints", "trips"
+  add_foreign_key "triptrails", "trails"
+  add_foreign_key "triptrails", "trips"
 end

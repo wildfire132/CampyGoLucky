@@ -1,0 +1,2 @@
+class TriptrailsController < ApplicationController
+end

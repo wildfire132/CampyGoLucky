@@ -1,3 +1,4 @@
 class Campsite < ApplicationRecord
-  belongs_to :city
+  has_many :campstops
+  has_many :trips, through: :campstops
 end

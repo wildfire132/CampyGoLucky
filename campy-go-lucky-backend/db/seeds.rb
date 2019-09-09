@@ -9,11 +9,30 @@
 
 require 'faker'
 
+User.destroy_all
+Trip.destroy_all
+Campsite.destroy_all
+Trail.destroy_all
+
 50.times do |user|
     username = Faker::Name.first_name
     User.create(username: username)
 end
 
-# 50.times do |trip|
-#     tripname = Fake::Name.
-# end
+50.times do |trip|
+    tripname = Faker::Games::ElderScrolls.city
+    Trip.create(name: tripname, user: (User.all.sample), start_date: Time.now)
+end
+
+50.times do |campsite|
+    campname = Faker::Games::ElderScrolls.last_name
+    new_camp = Campsite.create(name: campname)
+    Trip.all.sample.campsites << new_camp
+end
+
+
+50.times do |trail|
+    trailname = Faker::Games::ElderScrolls.first_name
+    new_trail = Trail.create(name: trailname)
+    Trip.all.sample.trails << new_trail
+end

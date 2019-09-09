@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :triptrails
   resources :campstops
   resources :trails
   resources :campsites

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  trip: one
+  trail: one
+  state_code: MyString
+
+two:
+  trip: two
+  trail: two
+  state_code: MyString
