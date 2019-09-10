@@ -18,3 +18,12 @@ function createTrip(){
     </form>
 </div> */
 }
+
+/* startLocation is e.target[1].value on the create trips form*/
+function findStartLatLong(startLocation){
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${startLocation}&key=ENV[GOOGLE_MAPS_API_KEY]`)
+    .then(response => response.json())
+    .then( result => console.log(result))
+
+}
+
