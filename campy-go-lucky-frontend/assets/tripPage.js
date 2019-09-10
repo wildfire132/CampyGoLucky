@@ -9,6 +9,8 @@ function displayTrip(trip) {
         let campspot = document.createElement("li")
         let campspotInfoLink = document.createElement("a")
         campspotInfoLink.innerText = campsite.name
+        campspotInfoLink.setAttribute("data-toggle", "modal")
+        campspotInfoLink.setAttribute("data-target"="#campModal")
         campspotInfoLink.addEventListener("click", displayCampSiteInfo(campsite))
 
         let dltBtn = document.createElement("button")
@@ -37,6 +39,9 @@ async function deleteCampSite(campsite) {
 
 function displayCampSiteInfo(campsite) {
     return function(e) {
-        debugger
+        // debugger
+        let campModal = document.createElement("div")
+        campModal.classList.add("modal", "fade")
+        campModal.id = "campModal"
     }
 }
