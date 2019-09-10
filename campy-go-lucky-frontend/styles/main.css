@@ -1,0 +1,11 @@
+.cards {
+    background-color: thistle;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.cards .card {
+    width: 30%;
+    margin-bottom: 1rem;
+}
