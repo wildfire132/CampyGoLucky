@@ -1,14 +1,20 @@
 function myTrips(user){
-    return function(e) {
+
+    console.log(user)
+    console.log("Made it to my Trips!!!!!!!!!!!")
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
 
-    user.trips.forEach(trip => {
-        let myTrips = document.createElement("h1")
+    let myTrips = document.createElement("h1")
         myTrips.innerText = "My Trips"
 
-        let cardsHolder = document.createElement("div")
-        cardsHolder.classList.add("cards")
+    let cardsHolder = document.createElement("div")
+    cardsHolder.classList.add("cards")
+
+    renderDelete.appendChild(cardsHolder)
+    renderDelete.appendChild(myTrips)
+
+    user.trips.forEach(trip => {
 
         let card = document.createElement("div")
         card.classList.add("card")
@@ -41,8 +47,9 @@ function myTrips(user){
         infoBtn.innerText = "More Info"
         infoBtn.classList.add("btn", "btn-outline-info")
         infoBtn.type = "button"
-        infoBtn.addEventListener("click", displayTrip(trip))
-
+        infoBtn.onclick = e => {
+             displayTrip(trip)
+        }
 
         tripInfoList.appendChild(numCampSites)
         tripInfoList.appendChild(totalMileage)
@@ -53,11 +60,10 @@ function myTrips(user){
         card.appendChild(infoBtn)
         card.appendChild(tripInfoList)
         cardsHolder.appendChild(card)
+
     })
 
     
-    renderDelete.appendChild(cardsHolder)
-    renderDelete.appendChild(myTrips)
 
     //         <div class="card">
     //             <img src="https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
@@ -73,5 +79,5 @@ function myTrips(user){
     //                 </ul>
     //                 <button type="button" class="btn btn-outline-info">More Info</button>
     //         </div>
-}
+
 }
