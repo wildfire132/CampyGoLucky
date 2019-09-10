@@ -1,4 +1,5 @@
 function myTrips(user){
+    return function(e) {
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
 
@@ -72,4 +73,5 @@ function myTrips(user){
     //                 </ul>
     //                 <button type="button" class="btn btn-outline-info">More Info</button>
     //         </div>
+}
 }
