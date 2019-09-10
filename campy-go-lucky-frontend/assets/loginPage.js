@@ -33,7 +33,7 @@ function loginPage(){
     let loginForm = document.createElement("form")
     loginForm.onsubmit = e =>{
         e.preventDefault()
-        loginFormSubmission("bob")
+        loginFormSubmission(e,"bob")
     }
 
     let formStyle = document.createElement("div")
@@ -76,8 +76,27 @@ function loginPage(){
     renderDelete.appendChild(jumbo)
 }
 
-function loginFormSubmission(string){
+function loginFormSubmission(e,string){
     console.log(string)
-    createTrip()
 
+    fetch('http://localhost:3000/users',{
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            username: e.target[0].value
+        })
+    }).then(response => response.json())
+    .then(json => console.log(json))
+}
+
+function handleRerouting(){
+    // if this user already has log in information then they will be routed to my Trips which are their specific trips
+    // else they will be routed to the createTrip screen
+    if(x=1){
+        console.log("banana")
+    } else {
+    createTrip()
+    }
 }

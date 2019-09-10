@@ -38,19 +38,19 @@ horizRule.classList.add("my-4")
 let loginForm = document.createElement("form")
 loginForm.onsubmit = e =>{
     e.preventDefault()
-    createFormSubmission("theresa")
+    createFormSubmission(e,"theresa")
 }
 
 let formStyle = document.createElement("div")
 formStyle.class = "form-group"
 
 let tripLabel = document.createElement("label")
-tripLabel.for = "exampleInputEmail1"
-tripLabel.innerText = "Username"
+tripLabel.for = "inputTripName"
+tripLabel.innerText = "Trip Name"
 let tripInput = document.createElement("input")
 tripInput.type = "text"
 tripInput.classList.add("form-control")
-tripInput.id = "exampleInputEmail1"
+tripInput.id = "inputTripName"
 tripInput.placeholder = "Enter username"
 tripInput.setAttribute("aria-describedby","emailHelp")
 
@@ -60,7 +60,7 @@ startingLocationLabel.innerText = "Starting Location"
 let startingLocationInput = document.createElement("input")
 startingLocationInput.type = "text"
 startingLocationInput.classList.add("form-control")
-startingLocationInput.id = "exampleInputEmail1"
+startingLocationInput.id = "inputStartLocation"
 startingLocationInput.placeholder = "Enter starting location"
 startingLocationInput.setAttribute("aria-describedby","emailHelp")
 
@@ -97,6 +97,12 @@ jumbo.appendChild(loginForm)
 renderDelete.appendChild(jumbo)
 }
 
-function createFormSubmission(string){
+function createFormSubmission(e,string){
 console.log(string)
+console.log(e)
+console.log(e.target[0].value)
+console.log(e.target[1].value)
+console.log(e.target[2].value)
+
+
 }
