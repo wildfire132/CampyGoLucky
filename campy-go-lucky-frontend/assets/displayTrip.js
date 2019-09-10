@@ -27,6 +27,11 @@ function displayTrip(trip) {
         campSitesList.appendChild(campspot)
     })
 
+    let editBtn = document.createElement("button")
+    editBtn.innerText = "Edit Trip"
+    editBtn.onclick = e => {
+        generateTripMap(trip)
+    }
 
 
 
