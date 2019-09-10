@@ -31,6 +31,7 @@ function loginPage(){
     horizRule.classList.add("my-4")
 
     let loginForm = document.createElement("form")
+    
     loginForm.onsubmit = e =>{
         e.preventDefault()
         loginFormSubmissionRouting(e)
@@ -77,15 +78,17 @@ function loginPage(){
 }
 
 function loginFormSubmissionRouting(e){
-    return fetch('http://localhost:3000/users')
+    let username = e.target[0].value
+    fetch('http://localhost:3000/users')
     .then(response => response.json())
     .then(arrayOfUsers => {
         console.log(arrayOfUsers)
         arrayOfUsers.forEach(function(user){
-           if (user.username == e.target[0].value){
+           if (user.username == username){
                return myTrips(user)
-           }})
-           return postNewUser(e.target[0].value)
+           }
+        })
+        //    return postNewUser(e.target[0].value)
         })
 }
 
