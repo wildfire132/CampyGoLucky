@@ -1,4 +1,6 @@
 function displayTrip(trip) {
+    console.log("In display trip!!!!!!")
+    debugger
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
     let tripName = document.createElement("h2")
