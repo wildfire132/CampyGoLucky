@@ -118,13 +118,19 @@ fetch(`http://localhost:3000/trips`,{
     })
 }).then(response => response.json())
   .then(newlyCreatedTrip => {
-      debugger
-      console.log(newlyCreatedTrip.start_location.replace(/\s/, "+"))
-      let searchTerm = newlyCreatedTrip.start_location.replace(/\s/, "+")
-      resolveSearch()
-      myTrips(newlyCreatedTrip.user)})
-//   would make sense for this to go to the google map display area.
+    getMap(newlyCreatedTrip.start_location)
+})}
 
+getMap = (startLocation) => {
+    fetch('http://localhost:3000/coms', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            startLocation: startLocation
+        })
+    })
+    .then(res => res.json())
+    .then(response => console.log("Hey we did it!", response))
 }
-
-function resolveSearch(searchTerm)
