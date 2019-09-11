@@ -118,6 +118,7 @@ fetch(`http://localhost:3000/trips`,{
     })
 }).then(response => response.json())
   .then(newlyCreatedTrip => {
+    getMarkers(newlyCreatedTrip,newlyCreatedTrip.start_location)
     getMap(newlyCreatedTrip,newlyCreatedTrip.start_location)
 })}
 
@@ -134,7 +135,26 @@ getMap = (trip,startLocation) => {
     .then(res => res.json())
     .then(response => {
         console.log("Hey we did it!", response)
-        console.log("trip", trip)
+        console.log("trip1", trip)
+        singleTrip(trip,response)
+
+    })
+}
+
+getMarkers = (trip, startLocation) => {
+    fetch('http://localhost:3000/markers', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            startLocation: startLocation
+        })
+    })
+    .then(res => res.json())
+    .then(response => {
+        console.log("Hey this are markers", response)
+        console.log("trip2", trip)
         singleTrip(trip,response)
 
     })
