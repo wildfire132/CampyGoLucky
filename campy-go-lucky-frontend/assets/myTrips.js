@@ -13,7 +13,13 @@ function myTrips(user){
     cardsHolder.classList.add("cards")
 
     renderDelete.appendChild(myTrips)
-
+    let addNewTrip = document.createElement("button")
+    addNewTrip.innerText = "Add New Trip"
+    addNewTrip.classList.add("btn", "btn-outline-success")
+    addNewTrip.onclick = (e) => {
+        createTrip(user)
+    }
+    renderDelete.appendChild(addNewTrip)
     if (!user.trips.length > 0){
         let noTrips =  document.createElement("p")
         noTrips.innerText = "You currently have no trips, add a new one?"
