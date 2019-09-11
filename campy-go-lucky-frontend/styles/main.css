@@ -13,7 +13,7 @@ div.trip-info {
 }
 
 body {
-    background-image: url("./forestroad2.jpg");
+    /* background-image: url("./forestroad2.jpg"); */
 }
 
 .cards .card {
@@ -39,7 +39,7 @@ header#burly nav.navbar {
 footer {
     background-color: burlywood;
     padding: 1rem;
-    bottom: 0;
+    bottom: 0; 
     position: fixed;
     width: 100%;
 }
