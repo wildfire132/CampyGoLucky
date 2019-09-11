@@ -117,7 +117,14 @@ fetch(`http://localhost:3000/trips`,{
         start_date: startDate
     })
 }).then(response => response.json())
-  .then(newlyCreatedTrip => myTrips(newlyCreatedTrip.user))
+  .then(newlyCreatedTrip => {
+      debugger
+      console.log(newlyCreatedTrip.start_location.replace(/\s/, "+"))
+      let searchTerm = newlyCreatedTrip.start_location.replace(/\s/, "+")
+      resolveSearch()
+      myTrips(newlyCreatedTrip.user)})
 //   would make sense for this to go to the google map display area.
 
 }
+
+function resolveSearch(searchTerm)
