@@ -78,18 +78,18 @@ function loginPage(){
 }
 
 function loginFormSubmissionRouting(e){
-    let username = e.target[0].value
+    let newUsername = e.target[0].value
     fetch('http://localhost:3000/users')
     .then(response => response.json())
     .then(arrayOfUsers => {
+        let filtered = arrayOfUsers.filter(user => user.username == newUsername)
         console.log(arrayOfUsers)
-        arrayOfUsers.forEach(function(user){
-           if (user.username == username){
-               return myTrips(user)
-           }
-        })
-        //    return postNewUser(e.target[0].value)
-        })
+        if (!!filtered){
+            myTrips(filtered[0])
+        } else {
+            postNewUser(newUsername)
+        }
+    })
 }
 
 function postNewUser(username){
