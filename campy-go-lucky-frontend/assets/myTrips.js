@@ -1,17 +1,17 @@
 function myTrips(user){
-
+    debugger
     console.log(user)
     console.log("Made it to my Trips!!!!!!!!!!!")
+    
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
 
     let myTrips = document.createElement("h1")
-        myTrips.innerText = "My Trips"
+    myTrips.innerText = "My Trips"
 
     let cardsHolder = document.createElement("div")
     cardsHolder.classList.add("cards")
 
-    renderDelete.appendChild(cardsHolder)
     renderDelete.appendChild(myTrips)
 
     if (!user.trips.length > 0){
@@ -32,9 +32,12 @@ function myTrips(user){
         cardBody.classList.add("card-body")
 
         let tripName = document.createElement("h2")
+        //delete line below 
+        tripName.classList.add("card-title")
         tripName.innerText = trip.name
 
         let tripDesc = document.createElement("p")
+        tripDesc.classList.add("card-text")
         tripDesc.innerText = "Placeholder -> probably should add trip.description attribute"
 
         let tripInfoList = document.createElement("ul")
@@ -68,7 +71,8 @@ function myTrips(user){
 
     })}
 
-    
+    renderDelete.appendChild(cardsHolder)
+
 
     //         <div class="card">
     //             <img src="https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"

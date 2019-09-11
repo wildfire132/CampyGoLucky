@@ -86,6 +86,7 @@ function loginFormSubmissionRouting(e){
         console.log(arrayOfUsers)
         if (filtered.length > 0){
             myTrips(filtered[0])
+            
         } else {
             postNewUser(newUsername)
         }
