@@ -21,7 +21,7 @@ function loginPage(){
 
     let appTitle = document.createElement("h1")
     appTitle.classList.add("display-4")
-    appTitle.innerText = "Campy Go Lucky™"
+    appTitle.innerText = "Sign Up :: Campy Go Lucky"
 
     let appDesc = document.createElement("p")
     appDesc.classList.add("lead")

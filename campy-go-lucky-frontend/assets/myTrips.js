@@ -14,6 +14,11 @@ function myTrips(user){
 
     renderDelete.appendChild(myTrips)
 
+    if (!user.trips.length > 0){
+        let noTrips =  document.createElement("p")
+        noTrips.innerText = "You currently have no trips, add a new one?"
+        renderDelete.appendChild(noTrips)
+    } else {
     user.trips.forEach(trip => {
 
         let card = document.createElement("div")
@@ -64,7 +69,7 @@ function myTrips(user){
         card.appendChild(tripInfoList)
         cardsHolder.appendChild(card)
 
-    })
+    })}
 
     renderDelete.appendChild(cardsHolder)
 
