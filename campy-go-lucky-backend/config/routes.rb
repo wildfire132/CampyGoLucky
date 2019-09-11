@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :trips
   resources :users
   post 'coms', to: 'coms#get_map'
+  post 'markers', to: 'markers#get_markers'
   get 'coms', to: 'coms#get_api_key'
 
 end

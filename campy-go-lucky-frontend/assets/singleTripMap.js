@@ -22,6 +22,8 @@ initMap = (trip, resultsHash) =>{
         zoom: 9
         
     })  
+    
+    marker = new google.maps.Marker({position: resultsHash.latlong, map: map})
     // newTripMap.appendChild(map)
     // debugger 
 }
