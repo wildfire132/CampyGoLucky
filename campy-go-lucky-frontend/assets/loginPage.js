@@ -84,7 +84,8 @@ function loginFormSubmissionRouting(e){
     .then(arrayOfUsers => {
         console.log(arrayOfUsers)
         arrayOfUsers.forEach(function(user){
-           if (user.username == username){
+            debugger
+           if (user.username.toLowerCase() == username.toLowerCase()){
                return myTrips(user)
            }
         })
