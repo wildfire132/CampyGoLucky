@@ -34,6 +34,7 @@ function displayTrip(trip) {
         campspot.appendChild(dltBtn)
 
         campSitesList.appendChild(campspot)
+      
     })} else {
         let noCamps = document.createElement("p")
         noCamps.innerText = "There are no campsites currently associated with this trip."
@@ -43,6 +44,7 @@ function displayTrip(trip) {
     tripName.appendChild(editBtn)
     renderDelete.appendChild(tripName)
     renderDelete.appendChild(campSitesList)
+
 
 }
 
