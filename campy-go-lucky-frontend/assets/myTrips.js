@@ -48,7 +48,7 @@ function myTrips(user){
         infoBtn.classList.add("btn", "btn-outline-info")
         infoBtn.type = "button"
         infoBtn.onclick = e => {
-             displayTrip(trip)
+            displayTrip(trip)
         }
 
         tripInfoList.appendChild(numCampSites)
