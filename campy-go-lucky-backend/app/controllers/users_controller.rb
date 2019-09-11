@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     def index
         users = User.all
-        render json: users, include: "campsites"
+        render json: users.to_json(:include => {:trips => {:include => :campsites}})
     end
 
     def show
@@ -17,4 +17,5 @@ class UsersController < ApplicationController
         user.save
         render json: user
     end
+
 end

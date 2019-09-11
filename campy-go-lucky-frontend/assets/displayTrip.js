@@ -1,12 +1,19 @@
 function displayTrip(trip) {
     console.log("In display trip!!!!!!")
-    debugger
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
     let tripName = document.createElement("h2")
     tripName.innerText = `${trip.name}`
-
     let campSitesList = document.createElement("ul")
+    debugger
+
+    let editBtn = document.createElement("button")
+        editBtn.innerText = "Add Campsites To Trip"
+        editBtn.onclick = e => {
+            generateTripMap(trip)
+        }
+
+    if (trip.campsites.length > 0){
     trip.campsites.forEach(campsite => {
         let campspot = document.createElement("li")
         let campspotInfoLink = document.createElement("a")
@@ -27,10 +34,15 @@ function displayTrip(trip) {
         campspot.appendChild(dltBtn)
 
         campSitesList.appendChild(campspot)
-    })
+    })} else {
+        let noCamps = document.createElement("p")
+        noCamps.innerText = "There are no campsites currently associated with this trip."
+        tripName.appendChild(noCamps)
+    }
 
-
-
+    tripName.appendChild(editBtn)
+    renderDelete.appendChild(tripName)
+    renderDelete.appendChild(campSitesList)
 
 }
 

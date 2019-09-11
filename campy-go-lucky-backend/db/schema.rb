@@ -40,7 +40,8 @@ ActiveRecord::Schema.define(version: 2019_09_09_223110) do
   create_table "trips", force: :cascade do |t|
     t.bigint "user_id"
     t.string "name"
-    t.datetime "start_date"
+    t.string "start_date"
+    t.string "start_location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_trips_on_user_id"

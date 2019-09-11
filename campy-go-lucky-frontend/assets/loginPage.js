@@ -21,7 +21,7 @@ function loginPage(){
 
     let appTitle = document.createElement("h1")
     appTitle.classList.add("display-4")
-    appTitle.innerText = "Campy Go Lucky™"
+    appTitle.innerText = "Sign Up :: Campy Go Lucky"
 
     let appDesc = document.createElement("p")
     appDesc.classList.add("lead")
@@ -84,7 +84,7 @@ function loginFormSubmissionRouting(e){
     .then(arrayOfUsers => {
         let filtered = arrayOfUsers.filter(user => user.username == newUsername)
         console.log(arrayOfUsers)
-        if (!!filtered){
+        if (filtered.length > 0){
             myTrips(filtered[0])
         } else {
             postNewUser(newUsername)
