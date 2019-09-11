@@ -1,5 +1,4 @@
 function myTrips(user){
-    debugger
     console.log(user)
     console.log("Made it to my Trips!!!!!!!!!!!")
     

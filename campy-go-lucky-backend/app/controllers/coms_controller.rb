@@ -14,7 +14,5 @@ class ComsController < ApplicationController
         render :json => @results
     end
 
-    private
-
 
 end
