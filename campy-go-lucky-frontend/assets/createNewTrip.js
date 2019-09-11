@@ -118,10 +118,10 @@ fetch(`http://localhost:3000/trips`,{
     })
 }).then(response => response.json())
   .then(newlyCreatedTrip => {
-    getMap(newlyCreatedTrip.start_location)
+    getMap(newlyCreatedTrip,newlyCreatedTrip.start_location)
 })}
 
-getMap = (startLocation) => {
+getMap = (trip,startLocation) => {
     fetch('http://localhost:3000/coms', {
         method: 'POST',
         headers: {
@@ -132,5 +132,10 @@ getMap = (startLocation) => {
         })
     })
     .then(res => res.json())
-    .then(response => console.log("Hey we did it!", response))
+    .then(response => {
+        console.log("Hey we did it!", response)
+        console.log("trip", trip)
+        singleTrip(trip,response)
+
+    })
 }

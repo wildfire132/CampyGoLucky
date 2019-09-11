@@ -5,7 +5,6 @@ function displayTrip(trip) {
     let tripName = document.createElement("h2")
     tripName.innerText = `${trip.name}`
     let campSitesList = document.createElement("ul")
-    debugger
 
     let editBtn = document.createElement("button")
         editBtn.innerText = "Add Campsites To Trip"
