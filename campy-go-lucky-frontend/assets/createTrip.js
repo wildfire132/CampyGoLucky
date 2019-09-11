@@ -38,7 +38,7 @@ horizRule.classList.add("my-4")
 let loginForm = document.createElement("form")
 loginForm.onsubmit = e =>{
     e.preventDefault()
-    createFormSubmission(e,"theresa")
+    createFormSubmission(e, user)
 }
 
 let formStyle = document.createElement("div")
@@ -51,7 +51,7 @@ let tripInput = document.createElement("input")
 tripInput.type = "text"
 tripInput.classList.add("form-control")
 tripInput.id = "inputTripName"
-tripInput.placeholder = "Enter username"
+tripInput.placeholder = "Enter trip name"
 tripInput.setAttribute("aria-describedby","emailHelp")
 
 let startingLocationLabel = document.createElement("label")
@@ -97,12 +97,27 @@ jumbo.appendChild(loginForm)
 renderDelete.appendChild(jumbo)
 }
 
-function createFormSubmission(e,string){
-console.log(string)
-console.log(e)
-console.log(e.target[0].value)
-console.log(e.target[1].value)
-console.log(e.target[2].value)
+function createFormSubmission(e,user){
+console.log("create Trips reached")
+console.log(user)
+console.log(user.id)
+let tripName = e.target[0].value
+let startLocation = e.target[1].value
+let startDate = e.target[2].value
 
+fetch(`http://localhost:3000/trips`,{
+    method: "POST",
+    headers: {
+        "Content-Type":"application/json"
+    },
+    body: JSON.stringify({
+        user_id: user.id,
+        name: tripName,
+        start_location: startLocation,
+        start_date: startDate
+    })
+}).then(response => response.json())
+  .then(newlyCreatedTrip => myTrips(newlyCreatedTrip.user))
+//   would make sense for this to go to the google map display area.
 
 }
