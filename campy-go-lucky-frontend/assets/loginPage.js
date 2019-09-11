@@ -84,8 +84,9 @@ function loginFormSubmissionRouting(e){
     .then(arrayOfUsers => {
         let filtered = arrayOfUsers.filter(user => user.username == newUsername)
         console.log(arrayOfUsers)
-        if (!!filtered){
+        if (filtered.length > 0){
             myTrips(filtered[0])
+            
         } else {
             postNewUser(newUsername)
         }

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/main.css" type="text/css">
+
+    <title>Hello, world!</title>
+</head>
+
+<body id="banana">
+    <header id="burly">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">Trip Name</a>
+            <!-- dynamically generate innerText for above? -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Create New Trip</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <div class="render-delete">
+        <div class="cards">
+            <div class="trip-info">
+            <h1 class="page-header"> Trip Name </h1>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a class="info" href="#">CampgroundA Name</a><button class="btn btn-outline-danger">Delete</button></li>
+                <li class="list-group-item"><a class="info" href="#">CampgroundB Name</a><button class="btn btn-outline-danger">Delete</button></li>
+                <li class="list-group-item"><a class="info" href="#">CampgroundC Name</a><button class="btn btn-outline-danger">Delete</button></li>
+            </ul>
+            </div>
+        </div>
+        <!-- <div class="cards">
+            <div class="card">
+                <img src="https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h1 class="card-title"><a href="#">Campground Name</a></h1>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <button>Delete</button>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="#">CampgroundA Name</a></li>
+                    <li class="list-group-item"><a href="#">CampgroundB Name</a></li>
+                    <li class="list-group-item"><a href="#">CampgroundC Name</a></li>
+                </ul>
+                <button type="button" class="btn btn-outline-info">More Info</button>
+            </div>
+
+            <div class="card">
+                <img src="https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h1 class="card-title">Trip Name</h1>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's
+                        content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Number of Campsites: include span?</li>
+                    <li class="list-group-item">Stretch goal: total mileage</li>
+                </ul>
+                <button type="button" class="btn btn-outline-info">More Info</button>
+            </div>
+
+            <div class="card">
+                <img src="https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h1 class="card-title">Trip Name</h1>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's
+                        content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Number of Campsites: include span?</li>
+                    <li class="list-group-item">Stretch goal: total mileage</li>
+                </ul>
+                <button type="button" class="btn btn-outline-info">More Info</button>
+            </div>
+
+            <div class="card">
+                <img src="https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h1 class="card-title">Trip Name</h1>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's
+                        content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Number of Campsites: include span?</li>
+                    <li class="list-group-item">Stretch goal: total mileage</li>
+                </ul>
+                <button type="button" class="btn btn-outline-info">More Info</button>
+            </div>
+
+            <div class="card">
+                <img src="https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h1 class="card-title">Trip Name</h1>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's
+                        content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Number of Campsites: include span?</li>
+                    <li class="list-group-item">Stretch goal: total mileage</li>
+                </ul>
+                <button type="button" class="btn btn-outline-info">More Info</button>
+            </div>
+        </div> -->
+    </div>
+    <footer>
+        <p>&copy 2019 KBI Industries</p>
+    </footer>
+</body>
+
+</html>

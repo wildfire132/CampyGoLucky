@@ -1,11 +1,50 @@
 .cards {
-    background-color: thistle;
+    /* background-image: url("./forestroad2.jpg"); */
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
 }
 
+div.trip-info {
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    margin-top: 22vh;
+}
+
+body {
+    background-image: url("./forestroad2.jpg");
+}
+
 .cards .card {
     width: 30%;
     margin-bottom: 1rem;
+}
+
+header#burly nav.navbar {
+    background-color: burlywood;
+}
+
+.info {
+    margin-right: 1rem;
+}
+
+.page-header {
+    text-align:center;
+    background-color: white;
+    
+    margin-bottom: 0;
+}
+
+footer {
+    background-color: burlywood;
+    padding: 1rem;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+}
+
+footer p {
+    font-size: 1.5rem;
+    text-align: right;
 }
