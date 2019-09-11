@@ -12,9 +12,11 @@ class TripsController < ApplicationController
     def create
         trip = Trip.new(user_id: params[:user_id], name: params[:name], start_date: params[:start_date], start_location: params[:start_location])   
         trip.save
-        trip.instant_query
         render json: trip
     end
-
+  
+    
 
 end
+
+
