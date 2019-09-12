@@ -16,12 +16,16 @@ Trail.destroy_all
 
 50.times do |user|
     username = Faker::Name.first_name
-    User.create(username: username)
+    new_user = User.new(username: username)
+    new_user.trips = []
+    new_user.save
 end
 
 50.times do |trip|
     tripname = Faker::Games::ElderScrolls.city
-    Trip.create(name: tripname, user: (User.all.sample), start_date: Time.now, start_location: Faker::Address.city)
+    new_trip = Trip.new(name: tripname, user: (User.all.sample), start_date: Time.now, start_location: Faker::Address.city)
+    new_trip.campsites = []
+    new_trip.save
 end
 
 50.times do |campsite|

@@ -1,16 +1,36 @@
+
+
 function singleTrip(trip, centerPointHash, user){
     // scriptSrcGoogleMaps() 
-    initMap(trip, centerPointHash, user)
-    //deleted markersArray from initMap params
+    fetch(`http://localhost:3000/users/${user.id}`)
+    .then(response => response.json())
+    .then(userObject => {
+        console.log("User Object", userObject)
+        initMap(trip, centerPointHash,userObject)
+    })
 }
 
-initMap = (trip, centerPointHash) =>{
-    //deleted markersArray
+initMap = (trip, centerPointHash,user) =>{
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
+
+    let myTripName = document.createElement("h1")
+    myTripName.innerText = trip.name
+
+    let backToTripsBtn = document.createElement("button")
+        backToTripsBtn.innerText = "Back to My Trips"
+        backToTripsBtn.classList.add("btn", "btn-outline-info")
+        backToTripsBtn.onclick = e =>{ 
+            console.log("initMAP ", user)
+            myTrips(user)
+        }
+
     // debugger
     let newTripMap = document.createElement("div")
     newTripMap.id = "map"
+
+    renderDelete.appendChild(myTripName)
+    renderDelete.appendChild(backToTripsBtn)
     renderDelete.appendChild(newTripMap)
 
     map = new google.maps.Map(document.getElementById('map'), {
@@ -21,6 +41,9 @@ initMap = (trip, centerPointHash) =>{
     map.addListener('click', function(e) {
         getMarkers(e.latLng, trip)
     });
+
+
+        // getWeatherInfo(marker)
 
 
     // map.panTo(position)

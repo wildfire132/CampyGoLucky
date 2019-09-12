@@ -8,12 +8,14 @@ function displayTrip(user,trip) {
 
     let editBtn = document.createElement("button")
         editBtn.innerText = "Add Campsites To Trip"
+        editBtn.classList.add("btn", "btn-outline-info")
         editBtn.onclick = e => {
             generateTripMap(trip)
         }
 
     let backToTripsBtn = document.createElement("button")
         backToTripsBtn.innerText = "Back to My Trips"
+        backToTripsBtn.classList.add("btn", "btn-outline-info")
         backToTripsBtn.onclick = e =>{ 
             console.log(trip)
             myTrips(user)
@@ -32,6 +34,7 @@ function displayTrip(user,trip) {
 
         let dltBtn = document.createElement("button")
         dltBtn.innerText = "Delete"
+        dltBtn.classList.add("btn", "btn-outline-info")
         dltBtn.onclick = e =>{ 
             deleteCampSite(campsite)
         }

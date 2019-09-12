@@ -1,4 +1,5 @@
 function myTrips(user){
+    console.log("MY TRIPS", user)
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
 
@@ -22,6 +23,7 @@ function myTrips(user){
         renderDelete.appendChild(noTrips)
     } else {
     user.trips.forEach(trip => {
+        debugger
         let card = document.createElement("div")
         card.classList.add("card")
 
@@ -69,7 +71,7 @@ function myTrips(user){
         editTrip.classList.add("btn", "btn-outline-info")
         editTrip.type = "button"
         editTrip.onclick = e => {
-            getMap(trip,trip.start_location)
+            getMap(trip,trip.start_location,user)
         }
 
         tripInfoList.appendChild(numCampSites)
