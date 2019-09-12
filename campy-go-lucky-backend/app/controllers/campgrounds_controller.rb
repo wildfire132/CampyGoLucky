@@ -13,7 +13,7 @@ class CampgroundsController < ApplicationController
         # or park name
 
         # https://developer.nps.gov/api/v1/campgrounds?stateCode=tn&limit=100&fields=addresses
-        string_response = RestClient.get("https://developer.nps.gov/api/v1/campgrounds?stateCode=#{stateCode}&limit=50&fields=addresses&api_key=#{ENV["NATIONAL_PARKS_API_KEY"]}")
+        string_response = RestClient.get("https://developer.nps.gov/api/v1/campgrounds?stateCode=#{stateCode}&limit=100&fields=addresses&api_key=#{ENV["NATIONAL_PARKS_API_KEY"]}")
         byebug
         response_hash = JSON.parse(string_response)
         campgroundName = response_hash["data"][0]["name"]
