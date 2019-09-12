@@ -83,7 +83,7 @@ function loginFormSubmissionRouting(e){
     .then(response => response.json())
     .then(arrayOfUsers => {
         let filtered = arrayOfUsers.filter(user => user.username == newUsername)
-        console.log(arrayOfUsers)
+      
         if (filtered.length > 0){
             myTrips(filtered[0])
             
@@ -103,6 +103,6 @@ function postNewUser(username){
             username: username
         })
     }).then(response => response.json())
-    .then(user => {console.log(user)
+    .then(user => {
     createTrip(user)})
 }

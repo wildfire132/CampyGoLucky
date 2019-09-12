@@ -1,7 +1,7 @@
 class MarkersController < ApplicationController
     def get_markers
         search_term = params['startLocation'].gsub(" ","+")
-          string_response = RestClient.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=campgrounds+in+#{search_term}&key=#{ENV["GOOGLE_MAPS_API_KEY"]}&radius=50000")
+          string_response = RestClient.get("https://maps.googleapis.com/maps/api/place/textsearch/json?query=campgrounds+in+#{search_term}&key=#{ENV["GOOGLE_MAPS_API_KEY"]}")
         markers_hash = JSON.parse(string_response)
 
         @results = []

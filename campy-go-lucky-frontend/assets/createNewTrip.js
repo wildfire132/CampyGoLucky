@@ -98,9 +98,7 @@ renderDelete.appendChild(jumbo)
 }
 
 function createFormSubmission(e,user){
-console.log("create Trips reached")
-console.log(user)
-console.log(user.id)
+
 let tripName = e.target[0].value
 let startLocation = e.target[1].value
 let startDate = e.target[2].value
@@ -118,7 +116,6 @@ fetch(`http://localhost:3000/trips`,{
     })
 }).then(response => response.json())
   .then(newlyCreatedTrip => {
-    getMarkers(newlyCreatedTrip,newlyCreatedTrip.start_location)
     getMap(newlyCreatedTrip,newlyCreatedTrip.start_location)
 })}
 
@@ -133,15 +130,14 @@ getMap = (trip,startLocation) => {
         })
     })
     .then(res => res.json())
-    .then(response => {
-        console.log("Hey we did it!", response)
-        console.log("trip1", trip)
-        singleTrip(trip,response)
+    .then(centerPointHash => {
+        getMarkers(trip,centerPointHash)
 
     })
 }
 
-getMarkers = (trip, startLocation) => {
+getMarkers = (trip, centerPointHash) => {
+    startLocation = trip.start_location
     fetch('http://localhost:3000/markers', {
         method: 'POST',
         headers: {
@@ -152,10 +148,8 @@ getMarkers = (trip, startLocation) => {
         })
     })
     .then(res => res.json())
-    .then(response => {
-        console.log("Hey this are markers", response)
-        console.log("trip2", trip)
-        singleTrip(trip,response)
+    .then(markersArray => {
+        singleTrip(trip, centerPointHash, markersArray)
 
     })
 }

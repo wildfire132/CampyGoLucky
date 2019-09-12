@@ -4,8 +4,7 @@ async function scriptSrcGoogleMaps(){
     fetch("http://localhost:3000/coms")
     .then(response => response.json())
     .then(json => {
-
-    console.log(json)    
+   
     let mapScript = document.getElementById("make-map")
     mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${json.api_key}`
     loginPage()
