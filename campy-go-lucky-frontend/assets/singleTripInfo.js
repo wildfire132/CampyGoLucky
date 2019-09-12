@@ -1,4 +1,4 @@
-function displayTrip(trip) {
+function displayTrip(user,trip) {
     
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
@@ -10,6 +10,13 @@ function displayTrip(trip) {
         editBtn.innerText = "Add Campsites To Trip"
         editBtn.onclick = e => {
             generateTripMap(trip)
+        }
+
+    let backToTripsBtn = document.createElement("button")
+        backToTripsBtn.innerText = "Back to My Trips"
+        backToTripsBtn.onclick = e =>{ 
+            console.log(trip)
+            myTrips(user)
         }
 
     if (trip.campsites.length > 0){
@@ -43,7 +50,7 @@ function displayTrip(trip) {
     tripName.appendChild(editBtn)
     renderDelete.appendChild(tripName)
     renderDelete.appendChild(campSitesList)
-
+    renderDelete.appendChild(backToTripsBtn)
 
 }
 

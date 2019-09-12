@@ -21,7 +21,7 @@ end
 
 50.times do |trip|
     tripname = Faker::Games::ElderScrolls.city
-    Trip.create(name: tripname, user: (User.all.sample), start_date: Time.now)
+    Trip.create(name: tripname, user: (User.all.sample), start_date: Time.now, start_location: Faker::Address.city)
 end
 
 50.times do |campsite|

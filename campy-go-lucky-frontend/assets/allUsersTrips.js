@@ -1,5 +1,4 @@
 function myTrips(user){
-    
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
 
@@ -23,7 +22,6 @@ function myTrips(user){
         renderDelete.appendChild(noTrips)
     } else {
     user.trips.forEach(trip => {
-
         let card = document.createElement("div")
         card.classList.add("card")
 
@@ -48,27 +46,41 @@ function myTrips(user){
 
         let numCampSites = document.createElement("li")
         numCampSites.classList.add("list-group-item")
-        numCampSites.innerText = "Number of Campsites: include span?"
+        numCampSites.innerText = `Number of Campsites: ${trip.campsites.length}`
 
         let totalMileage = document.createElement("li")
         totalMileage.classList.add("list-group-item")
         totalMileage.innerText = "Total Mileage: stretch goal?"
+
+        let startDate = document.createElement("li")
+        startDate.classList.add("list-group-item")
+        startDate.innerText = `Trip Start Date: ${trip.start_date}`
 
         let infoBtn = document.createElement("button")
         infoBtn.innerText = "More Info"
         infoBtn.classList.add("btn", "btn-outline-info")
         infoBtn.type = "button"
         infoBtn.onclick = e => {
-            displayTrip(trip)
+            displayTrip(user,trip)
+        }
+
+        let editTrip = document.createElement("button")
+        editTrip.innerText = "Edit Trip"
+        editTrip.classList.add("btn", "btn-outline-info")
+        editTrip.type = "button"
+        editTrip.onclick = e => {
+            getMap(trip,trip.start_location)
         }
 
         tripInfoList.appendChild(numCampSites)
         tripInfoList.appendChild(totalMileage)
+        tripInfoList.appendChild(startDate)
         cardBody.appendChild(tripName)
         cardBody.appendChild(tripDesc)
         card.appendChild(cardImg)
         card.appendChild(cardBody)
         card.appendChild(infoBtn)
+        card.appendChild(editTrip)
         card.appendChild(tripInfoList)
         cardsHolder.appendChild(card)
 
