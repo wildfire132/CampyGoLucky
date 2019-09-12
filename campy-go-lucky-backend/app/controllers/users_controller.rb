@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     # end
 
     def create
-        user = User.new(username: params[:username])
+        user = User.new(username: params[:username].downcase.capitalize)
         user.save
         render json: user
     end

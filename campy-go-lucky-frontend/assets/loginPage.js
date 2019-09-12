@@ -78,12 +78,13 @@ function loginPage(){
 }
 
 function loginFormSubmissionRouting(e){
+    console.log("creating User")
     let newUsername = e.target[0].value
     fetch('http://localhost:3000/users')
     .then(response => response.json())
     .then(arrayOfUsers => {
-        let filtered = arrayOfUsers.filter(user => user.username == newUsername)
-      
+        let filtered = arrayOfUsers.filter(user => (user.username.charAt(0).toUpperCase() + user.username.toLowerCase().slice(1)) == (newUsername.charAt(0).toUpperCase() + newUsername.toLowerCase().slice(1)))
+        debugger
         if (filtered.length > 0){
             myTrips(filtered[0])
             
