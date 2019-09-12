@@ -1,4 +1,5 @@
 
+
 function singleTrip(trip, centerPointHash, user){
     // scriptSrcGoogleMaps() 
     fetch(`http://localhost:3000/users/${user.id}`)
@@ -70,26 +71,26 @@ function getMarkers(latLong, trip) {
             .then(res => res.json())
             .then(markersArray => {
                 console.log("is the fetch working?", markersArray)
+
                 displayMarkers(trip, markersArray)
             })
     }
 
 
 function displayMarkers(trip, markersArray) {
-    // debugger
+    debugger
     markersArray.forEach(function (marker) {
-
+        // debugger
     contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +
-        `<h1 id="firstHeading" class="firstHeading">${marker.camp_name}</h1>` +
+        `<h3 id="firstHeading" class="firstHeading">${marker.camp_name}</h3>` +
         '<div id="bodyContent">' +
-        '<p>Content</p>' +
-        '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-        'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' +
-        '(last visited June 22, 2009).</p>' +
+            `<p>Location: ${marker.address}</p>` +
+            `<img src="${marker.imgUrl}">` +
+            `<a href="${marker.url}">Campground Information</a>` +
         '</div>' +
-        '</div>';
+    '</div>';
 
     // getWeatherInfo(marker)
 
@@ -122,10 +123,21 @@ function displayMarkers(trip, markersArray) {
             showInfoBtn.onclick = e => {
                 myCamps(marker, trip)
             }
+
+            let addCampgroundBtn = document.createElement("button")
+            addCampgroundBtn.innerText = "Add To Trip"
+            addCampgroundBtn.onclick = e => {
+                associateCampgroundWithTrip(marker, trip)
+            }
             let grabDiv = document.querySelector(".gm-style-iw")
             // debugger
             grabDiv.append(showInfoBtn)
+            grabDiv.append(addCampgroundBtn)
         }
     }
 })
+}
+
+function associateCampgroundWithTrip(marker, trip) {
+    debugger
 }
