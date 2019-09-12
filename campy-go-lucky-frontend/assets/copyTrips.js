@@ -1,4 +1,4 @@
-function myTrips() {
+function myCamps(marker, trip) {
     {/* <h1> My Trips </h1>
         <div class="card-group" id="flex-wrap-items">
             <div class="card" style="width: 18rem;">
@@ -35,5 +35,36 @@ function myTrips() {
             <button type="submit" class="btn btn-outline-success">Create Trip!</button>
         </form>
     </div> */}
+    // debugger
 
+    getCampground(marker, trip)
+
+
+}
+
+
+getCampground = (marker, trip) => {
+    let latlong = marker.latlong
+    let address = marker.address
+    let camp_name = marker.camp_name
+    // debugger
+    fetch('http://localhost:3000/campgrounds', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            latlong,
+            address,
+            camp_name
+        })
+    })
+        .then(res => res.json())
+        .then(json => {
+            displayCampgroundInfo(trip, json)
+        })
+}
+
+function displayCampgroundInfo(trip, json) {
+    // debugger
 }

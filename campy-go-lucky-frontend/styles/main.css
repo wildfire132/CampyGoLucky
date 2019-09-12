@@ -37,24 +37,30 @@ header#burly nav.navbar {
 }
 
 footer {
-    bottom: 0; 
-    position: fixed;
     width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 2.5rem;
 }
 
 footer p {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     text-align: right;
     margin-right: 1rem;
 }
 
-
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
 .render-delete {
     height: 100%;
+    padding: 2.5rem;
   }
 
 #map {
-    height: 100%;
+    height: 80%;
+    width: 90%;
   }
 
   html, body {
@@ -62,3 +68,26 @@ footer p {
     margin: 0;
     padding: 0;
   }
+
+  .flexy {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-evenly;
+  }
+
+  #camp {
+      border: 1px solid black;
+      border-radius: 1rem;
+      background-color: burlywood;
+      padding: 1rem;
+      margin-top: 1rem;
+  }
+  /* #toggle-map {
+      border: 1px solid black;
+      text-align: right;
+  } */
+  /* .toggle-buttons {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: flex-end;
+  } */

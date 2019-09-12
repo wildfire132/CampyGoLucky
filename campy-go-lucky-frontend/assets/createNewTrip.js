@@ -120,6 +120,7 @@ fetch(`http://localhost:3000/trips`,{
 })}
 
 getMap = (trip,startLocation) => {
+    // debugger
     fetch('http://localhost:3000/coms', {
         method: 'POST',
         headers: {
@@ -137,6 +138,7 @@ getMap = (trip,startLocation) => {
 }
 
 getMarkers = (trip, centerPointHash) => {
+    // debugger
     startLocation = trip.start_location
     fetch('http://localhost:3000/markers', {
         method: 'POST',
@@ -150,6 +152,5 @@ getMarkers = (trip, centerPointHash) => {
     .then(res => res.json())
     .then(markersArray => {
         singleTrip(trip, centerPointHash, markersArray)
-
     })
 }

@@ -6,6 +6,7 @@ class MarkersController < ApplicationController
 
         @results = []
         markers_hash["results"].each do |marker|
+          # byebug
             one_marker = {
             latlong: marker["geometry"]["location"],
             address: marker["formatted_address"],

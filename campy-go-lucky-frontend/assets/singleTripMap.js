@@ -10,6 +10,7 @@ function singleTrip(trip, centerPointHash, markersArray){
 initMap = (trip, centerPointHash, markersArray) =>{
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
+    // debugger
     let newTripMap = document.createElement("div")
     newTripMap.id = "map"
     renderDelete.appendChild(newTripMap)
@@ -32,15 +33,23 @@ initMap = (trip, centerPointHash, markersArray) =>{
            '</div>'+
            '</div>';
 
-        marker = new google.maps.Marker({position: marker.latlong, map: map, title: marker.name})
+        markertest = new google.maps.Marker({position: marker.latlong, map: map, title: marker.name})
 
-        google.maps.event.addListener(marker, 'click', getInfoCallback(map, contentString))
+        google.maps.event.addListener(markertest, 'click', getInfoCallback(map, contentString))
 
         function getInfoCallback(map, content){
             let infowindow = new google.maps.InfoWindow({content: content})
-            return function() {
+            return async function() {
                 infowindow.setContent(content)
-                infowindow.open(map, this)
+                await infowindow.open(map, this)
+                let showInfoBtn = document.createElement("button")
+                showInfoBtn.innerText = "Show Info"
+                showInfoBtn.onclick = e => {
+                    myCamps(marker, trip)
+                }
+                let grabDiv = document.querySelector(".gm-style-iw")
+                // debugger
+                grabDiv.append(showInfoBtn)
             }
         } 
     })
