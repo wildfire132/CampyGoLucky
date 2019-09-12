@@ -1,4 +1,5 @@
 function createTrip(user){
+    console.log(user)
 /* <div class="jumbotron">
     <h1 class="display-4">Creating New Trip</h1>
     <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -38,6 +39,7 @@ horizRule.classList.add("my-4")
 let loginForm = document.createElement("form")
 loginForm.onsubmit = e =>{
     e.preventDefault()
+    console.log(user)
     createFormSubmission(e, user)
 }
 
@@ -99,6 +101,7 @@ renderDelete.appendChild(jumbo)
 
 function createFormSubmission(e,user){
 
+    console.log(user)
 let tripName = e.target[0].value
 let startLocation = e.target[1].value
 let startDate = e.target[2].value
@@ -116,10 +119,10 @@ fetch(`http://localhost:3000/trips`,{
     })
 }).then(response => response.json())
   .then(newlyCreatedTrip => {
-    getMap(newlyCreatedTrip,newlyCreatedTrip.start_location)
+    getMap(newlyCreatedTrip,newlyCreatedTrip.start_location,user)
 })}
 
-getMap = (trip,startLocation) => {
+getMap = (trip,startLocation,user) => {
     // debugger
     fetch('http://localhost:3000/coms', {
         method: 'POST',
@@ -132,12 +135,11 @@ getMap = (trip,startLocation) => {
     })
     .then(res => res.json())
     .then(centerPointHash => {
-        getMarkers(trip,centerPointHash)
-
+        getMarkers(trip,centerPointHash,user)
     })
 }
 
-getMarkers = (trip, centerPointHash) => {
+getMarkers = (trip, centerPointHash,user) => {
     // debugger
     startLocation = trip.start_location
     fetch('http://localhost:3000/markers', {
@@ -151,6 +153,6 @@ getMarkers = (trip, centerPointHash) => {
     })
     .then(res => res.json())
     .then(markersArray => {
-        singleTrip(trip, centerPointHash, markersArray)
+        singleTrip(trip, centerPointHash, markersArray,user)
     })
 }

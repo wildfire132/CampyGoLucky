@@ -10,7 +10,8 @@ class TripsController < ApplicationController
     end
 
     def create
-        trip = Trip.new(user_id: params[:user_id], name: params[:name], start_date: params[:start_date], start_location: params[:start_location])   
+        trip = Trip.new(user_id: params[:user_id], name: params[:name], start_date: params[:start_date], start_location: params[:start_location])
+        trip.campsites = []
         trip.save
         render json: trip
     end

@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
     def show
         user = User.find(params[:id])
-        render json: user
+        render json: user.to_json(:include => {:trips => {:include => :campsites}})
     end
 
     # def new
@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
     def create
         user = User.new(username: params[:username].downcase.capitalize)
+        user.trips = []
         user.save
         render json: user
     end

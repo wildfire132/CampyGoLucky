@@ -1,14 +1,34 @@
-function singleTrip(trip, centerPointHash, markersArray){
+function singleTrip(trip, centerPointHash, markersArray,user){
     // scriptSrcGoogleMaps() 
-    initMap(trip, centerPointHash, markersArray)
+    fetch(`http://localhost:3000/users/${user.id}`)
+    .then(response => response.json())
+    .then(userObject => {
+        console.log("User Object", userObject)
+        initMap(trip, centerPointHash, markersArray,userObject)
+    })
 }
 
-initMap = (trip, centerPointHash, markersArray) =>{
+initMap = (trip, centerPointHash, markersArray,user) =>{
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
+
+    let myTripName = document.createElement("h1")
+    myTripName.innerText = trip.name
+
+    let backToTripsBtn = document.createElement("button")
+        backToTripsBtn.innerText = "Back to My Trips"
+        backToTripsBtn.classList.add("btn", "btn-outline-info")
+        backToTripsBtn.onclick = e =>{ 
+            console.log("initMAP ", user)
+            myTrips(user)
+        }
+
     // debugger
     let newTripMap = document.createElement("div")
     newTripMap.id = "map"
+
+    renderDelete.appendChild(myTripName)
+    renderDelete.appendChild(backToTripsBtn)
     renderDelete.appendChild(newTripMap)
 
     map = new google.maps.Map(document.getElementById('map'), {
@@ -29,7 +49,7 @@ initMap = (trip, centerPointHash, markersArray) =>{
            '</div>'+
            '</div>';
 
-        getWeatherInfo(marker)
+        // getWeatherInfo(marker)
 
         markertest = new google.maps.Marker({position: marker.latlong, map: map, title: marker.name})
 
