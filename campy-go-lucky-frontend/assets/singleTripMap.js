@@ -1,10 +1,6 @@
 function singleTrip(trip, centerPointHash, markersArray){
-    // scriptSrcGoogleMaps()
-    
+    // scriptSrcGoogleMaps() 
     initMap(trip, centerPointHash, markersArray)
-
-   
-
 }
 
 initMap = (trip, centerPointHash, markersArray) =>{
@@ -33,9 +29,26 @@ initMap = (trip, centerPointHash, markersArray) =>{
            '</div>'+
            '</div>';
 
+        getWeatherInfo(marker)
+
         markertest = new google.maps.Marker({position: marker.latlong, map: map, title: marker.name})
 
         google.maps.event.addListener(markertest, 'click', getInfoCallback(map, contentString))
+
+        function getWeatherInfo(marker){
+            fetch("http://localhost:3000/weathers",{
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({
+                    latlong: marker.latlong
+                })
+            }).then(response => response.json())
+              .then(json => {
+                console.log(json)
+            })
+        }
 
         function getInfoCallback(map, content){
             let infowindow = new google.maps.InfoWindow({content: content})
