@@ -1,12 +1,12 @@
 class TripsController < ApplicationController
     def index
         trips = Trip.all
-        render json: trips
+        render json: trips, include: [:campsites]
     end
 
     def show
         trip = Trip.find(params[:id])
-        render json: trip
+        render json: trip, include: [:campsites]
     end
 
     def create
