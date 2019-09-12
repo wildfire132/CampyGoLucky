@@ -135,7 +135,6 @@ getMap = (trip,startLocation,user) => {
     })
     .then(res => res.json())
     .then(centerPointHash => {
-
         singleTrip(trip,centerPointHash,user)
     })
 }
@@ -161,4 +160,3 @@ getMap = (trip,startLocation,user) => {
 //         singleTrip(trip, centerPointHash, markersArray)
 //     })
 // }
-

@@ -1,5 +1,3 @@
-
-
 function singleTrip(trip, centerPointHash, user){
     // scriptSrcGoogleMaps() 
     fetch(`http://localhost:3000/users/${user.id}`)
@@ -21,7 +19,6 @@ initMap = (trip, centerPointHash,user) =>{
         backToTripsBtn.innerText = "Back to My Trips"
         backToTripsBtn.classList.add("btn", "btn-outline-info")
         backToTripsBtn.onclick = e =>{ 
-            console.log("initMAP ", user)
             myTrips(user)
         }
 
@@ -42,6 +39,7 @@ initMap = (trip, centerPointHash,user) =>{
         getMarkers(e.latLng, trip)
     });
 
+        // getWeatherInfo(marker)
 
         // getWeatherInfo(marker)
 
@@ -54,27 +52,27 @@ initMap = (trip, centerPointHash,user) =>{
 //need to update with click event logic
 function getMarkers(latLong, trip) {
     // debugger
-        startLocation = trip.start_location
-        
-        // state = centerPointHash.address.split(", ")[1]
-        fetch('http://localhost:3000/markers', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                // startLocation,
-                // state,
-                latLong
-            })
+    startLocation = trip.start_location
+    
+    // state = centerPointHash.address.split(", ")[1]
+    fetch('http://localhost:3000/markers', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            // startLocation,
+            // state,
+            latLong
         })
-            .then(res => res.json())
-            .then(markersArray => {
-                console.log("is the fetch working?", markersArray)
+    })
+    .then(res => res.json())
+    .then(markersArray => {
+        console.log("is the fetch working?", markersArray)
 
-                displayMarkers(trip, markersArray)
-            })
-    }
+        displayMarkers(trip, markersArray)
+    })
+}
 
 
 function displayMarkers(trip, markersArray) {
