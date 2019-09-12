@@ -41,6 +41,9 @@ initMap = (trip, centerPointHash,user) =>{
 
         // getWeatherInfo(marker)
 
+        // getWeatherInfo(marker)
+
+
     // map.panTo(position)
     // debugger
     
