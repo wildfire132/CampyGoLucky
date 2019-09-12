@@ -135,24 +135,30 @@ getMap = (trip,startLocation,user) => {
     })
     .then(res => res.json())
     .then(centerPointHash => {
-        getMarkers(trip,centerPointHash,user)
+        // debugger
+        // getMarkers(trip,centerPointHash)
+        singleTrip(trip,centerPointHash,user)
     })
 }
 
-getMarkers = (trip, centerPointHash,user) => {
-    // debugger
-    startLocation = trip.start_location
-    fetch('http://localhost:3000/markers', {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            startLocation: startLocation
-        })
-    })
-    .then(res => res.json())
-    .then(markersArray => {
-        singleTrip(trip, centerPointHash, markersArray,user)
-    })
-}
+//go to parks api instead of google
+// getMarkers = (trip, centerPointHash) => {
+//     // debugger
+//     startLocation = trip.start_location
+//     state = centerPointHash.address.split(", ")[1]
+//     fetch('http://localhost:3000/markers', {
+//         method: 'POST',
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify({
+//             // startLocation,
+//             state
+
+//         })
+//     })
+//     .then(res => res.json())
+//     .then(markersArray => {
+//         singleTrip(trip, centerPointHash, markersArray)
+//     })
+// }
