@@ -1,14 +1,15 @@
-function singleTrip(trip, centerPointHash, markersArray,user){
+
+function singleTrip(trip, centerPointHash, user){
     // scriptSrcGoogleMaps() 
     fetch(`http://localhost:3000/users/${user.id}`)
     .then(response => response.json())
     .then(userObject => {
         console.log("User Object", userObject)
-        initMap(trip, centerPointHash, markersArray,userObject)
+        initMap(trip, centerPointHash,userObject)
     })
 }
 
-initMap = (trip, centerPointHash, markersArray,user) =>{
+initMap = (trip, centerPointHash,user) =>{
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
 
@@ -36,54 +37,95 @@ initMap = (trip, centerPointHash, markersArray,user) =>{
         zoom: 9 
     })  
 
-    markersArray.forEach(function(marker){
-        contentString = '<div id="content">'+
-           '<div id="siteNotice">'+
-           '</div>'+
-           `<h1 id="firstHeading" class="firstHeading">${marker.camp_name}</h1>`+
-           '<div id="bodyContent">'+
-           '<p>Content</p>'+
-           '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-           'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-           '(last visited June 22, 2009).</p>'+
-           '</div>'+
-           '</div>';
+    map.addListener('click', function(e) {
+        getMarkers(e.latLng, trip)
+    });
+
 
         // getWeatherInfo(marker)
 
-        markertest = new google.maps.Marker({position: marker.latlong, map: map, title: marker.name})
 
-        google.maps.event.addListener(markertest, 'click', getInfoCallback(map, contentString))
+    // map.panTo(position)
+    // debugger
+    
+}
 
-        function getWeatherInfo(marker){
-            fetch("http://localhost:3000/weathers",{
-                method: "POST",
-                headers: {
-                    "Content-Type":"application/json"
-                },
-                body: JSON.stringify({
-                    latlong: marker.latlong
-                })
-            }).then(response => response.json())
-              .then(json => {
+//need to update with click event logic
+function getMarkers(latLong, trip) {
+    // debugger
+        startLocation = trip.start_location
+        
+        // state = centerPointHash.address.split(", ")[1]
+        fetch('http://localhost:3000/markers', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // startLocation,
+                // state,
+                latLong
+            })
+        })
+            .then(res => res.json())
+            .then(markersArray => {
+                console.log("is the fetch working?", markersArray)
+                displayMarkers(trip, markersArray)
+            })
+    }
+
+
+function displayMarkers(trip, markersArray) {
+    // debugger
+    markersArray.forEach(function (marker) {
+
+    contentString = '<div id="content">' +
+        '<div id="siteNotice">' +
+        '</div>' +
+        `<h1 id="firstHeading" class="firstHeading">${marker.camp_name}</h1>` +
+        '<div id="bodyContent">' +
+        '<p>Content</p>' +
+        '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
+        'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' +
+        '(last visited June 22, 2009).</p>' +
+        '</div>' +
+        '</div>';
+
+    // getWeatherInfo(marker)
+
+    markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name })
+
+    google.maps.event.addListener(markertest, 'click', getInfoCallback(map, contentString))
+
+    function getWeatherInfo(marker) {
+        fetch("http://localhost:3000/weathers", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                latlong: marker.latlong
+            })
+        }).then(response => response.json())
+            .then(json => {
                 console.log(json)
             })
-        }
+    }
 
-        function getInfoCallback(map, content){
-            let infowindow = new google.maps.InfoWindow({content: content})
-            return async function() {
-                infowindow.setContent(content)
-                await infowindow.open(map, this)
-                let showInfoBtn = document.createElement("button")
-                showInfoBtn.innerText = "Show Info"
-                showInfoBtn.onclick = e => {
-                    myCamps(marker, trip)
-                }
-                let grabDiv = document.querySelector(".gm-style-iw")
-                // debugger
-                grabDiv.append(showInfoBtn)
+    function getInfoCallback(map, content) {
+        let infowindow = new google.maps.InfoWindow({ content: content })
+        return async function () {
+            infowindow.setContent(content)
+            await infowindow.open(map, this)
+            let showInfoBtn = document.createElement("button")
+            showInfoBtn.innerText = "Show Info"
+            showInfoBtn.onclick = e => {
+                myCamps(marker, trip)
             }
-        } 
-    })
+            let grabDiv = document.querySelector(".gm-style-iw")
+            // debugger
+            grabDiv.append(showInfoBtn)
+        }
+    }
+})
 }
