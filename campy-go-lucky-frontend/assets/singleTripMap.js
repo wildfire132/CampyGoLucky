@@ -1,10 +1,6 @@
 function singleTrip(trip, centerPointHash, markersArray){
-    // scriptSrcGoogleMaps()
-    
+    // scriptSrcGoogleMaps() 
     initMap(trip, centerPointHash, markersArray)
-
-   
-
 }
 
 initMap = (trip, centerPointHash, markersArray) =>{
