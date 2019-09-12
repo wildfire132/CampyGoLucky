@@ -61,7 +61,7 @@ function myTrips(user){
         infoBtn.classList.add("btn", "btn-outline-info")
         infoBtn.type = "button"
         infoBtn.onclick = e => {
-            displayTrip(trip)
+            displayTrip(user,trip)
         }
 
         let editTrip = document.createElement("button")
