@@ -1,6 +1,4 @@
 function myTrips(user){
-    console.log(user)
-    console.log("Made it to my Trips!!!!!!!!!!!")
     
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
