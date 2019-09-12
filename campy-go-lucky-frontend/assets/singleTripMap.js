@@ -1,5 +1,4 @@
 function singleTrip(trip, centerPointHash, markersArray){
-    // endpoint = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2UytQqN0X2Rtm0hGT_xEi6srZyop0CvM&callback=initMap&'
     // scriptSrcGoogleMaps()
     
     initMap(trip, centerPointHash, markersArray)
