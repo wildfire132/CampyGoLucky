@@ -181,7 +181,6 @@ function displayMarkers(trip, markersArray) {
             addCampgroundBtn.onclick = e => {
                 associateCampgroundWithTrip(marker, trip)
             }
-<<<<<<< HEAD
 
             let showWeatherBtn = document.createElement("button")
             showWeatherBtn.innerText = "Forecast"
@@ -207,14 +206,9 @@ function displayMarkers(trip, markersArray) {
             grabDiv.append(showCampBtn)
             // grabDiv.append(showInfoBtn)
             grabDiv.append(showWeatherBtn)
-            grabDiv.append(addCampgroundBtn)
-=======
             // debugger
             grabDiv = document.querySelector(".gm-style-iw")
             grabDiv.prepend(addCampgroundBtn)
-
-            grabDiv.append(showInfoBtn)
->>>>>>> 94b0eb38bc79925a3140dd049ad0df3e273a2105
         }
     }
 })
@@ -445,9 +439,6 @@ async function deleteCampSite(trip, centerPointHash, user, campsite) {
 //         .then(markersArray => {
 //             console.log("is the trail fetch working?", markersArray)
 
-<<<<<<< HEAD
-=======
 //             displayTrailMarkers(trip, markersArray)
 //         })
->>>>>>> 94b0eb38bc79925a3140dd049ad0df3e273a2105
 // }
