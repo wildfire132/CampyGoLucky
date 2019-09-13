@@ -90,25 +90,25 @@ function displayMarkers(trip, markersArray) {
         '</div>' +
     '</div>';
 
-    // getWeatherInfo(marker)
+    getWeatherInfo(marker)
 
     markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name })
 
     google.maps.event.addListener(markertest, 'click', getInfoCallback(map, contentString))
 
     function getWeatherInfo(marker) {
-        fetch("http://localhost:3000/weathers", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                latlong: marker.latlong
-            })
+    fetch("http://localhost:3000/weathers", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            latlong: marker.latlong
+        })
         }).then(response => response.json())
-            .then(json => {
-                console.log(json)
-            })
+        .then(json => {
+            console.log(json)
+        })
     }
 
     function getInfoCallback(map, content) {
@@ -137,5 +137,5 @@ function displayMarkers(trip, markersArray) {
 }
 
 function associateCampgroundWithTrip(marker, trip) {
-    debugger
+    
 }
