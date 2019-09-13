@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post 'coms', to: 'coms#get_map'
   post 'markers', to: 'markers#get_markers'
   get 'coms', to: 'coms#get_api_key'
-  post 'campgrounds', to: 'campgrounds#get_campground'
+  post 'campgrounds', to: 'campgrounds#get_campground_info'
   post 'weathers', to: 'weathers#get_weather'
 
 end

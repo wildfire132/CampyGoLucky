@@ -139,6 +139,21 @@ function displayMarkers(trip, markersArray) {
         })
     }
 
+    function showCampInfo(marker){
+        fetch("http://localhost:3000/campgrounds", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            info_url: marker.url
+        })
+        }).then(response => response.json())
+        .then(campJson => {
+            renderCampInfo(campJson,marker)
+        })
+    }
+
     function getInfoCallback(map, content) {
         let infoWindow = new google.maps.InfoWindow({ content: content})
         return async function () {
@@ -164,12 +179,22 @@ function displayMarkers(trip, markersArray) {
             showWeatherBtn.onclick = e =>{
                 getWeatherInfo(marker)
             }
+
+            let showCampBtn = document.createElement("button")
+            showCampBtn.innerText = "Camp Info"
+            showCampBtn.setAttribute("data-toggle","modal")
+            showCampBtn.setAttribute("data-target","#exampleModal")
+            showCampBtn.onclick = e =>{
+                showCampInfo(marker)
+            }
+
             let grabDiv = document.getElementById("firstHeading")
             let docBreak = document.createElement('br')
             // let grabDiv = document.querySelector(".gm-style-iw")
             // debugger
             grabDiv.append(docBreak)
-            grabDiv.append(showInfoBtn)
+            grabDiv.append(showCampBtn)
+            // grabDiv.append(showInfoBtn)
             grabDiv.append(showWeatherBtn)
             grabDiv.append(addCampgroundBtn)
         }
@@ -261,8 +286,16 @@ function displayCampSites(trip, centerPointHash, user) {
     renderDelete.appendChild(tripStops)
     tripStops.appendChild(tripStopsHeader)
     tripStops.appendChild(campList)
-    
+}
 
+function renderCampInfo(campJson,marker){
+    console.log("RenderCampInfo", campJson)
+    console.log("Render camp Marker", marker)
+    let modalDiv = document.getElementsByClassName("modal-body")[0]
+    deleteAllUnder(modalDiv)
+
+    let modalTitle = document.getElementsByClassName("modal-title")[0]
+    modalTitle.innerText = marker.camp_name
 }
 
 function renderWeatherInfo(weatherJson,marker){
