@@ -20,7 +20,8 @@ class CampsitesController < ApplicationController
 
     # def destroy
     #     campsite = Campsite.find(params[:id])
-    #     campsite.destroy
+    #     campsite.campstop.destroy
+    #     need to delete the campstop - need the trip id too
         
     # end
 

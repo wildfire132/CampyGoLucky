@@ -51,7 +51,7 @@ function displayMyTrips(user){
 
         let tripDesc = document.createElement("p")
         tripDesc.classList.add("card-text")
-        tripDesc.innerText = "Placeholder -> probably should add trip.description attribute"
+        tripDesc.innerText = trip.description
 
         let tripInfoList = document.createElement("ul")
         tripInfoList.classList.add("list-group", "list-group-flush")
