@@ -608,8 +608,8 @@ contentString = '<div id="content">' +
 
             grabDiv = document.querySelector(".gm-style-iw")
             // grabDiv.append(showInfoBtn)
-            grabDiv.append(showWeatherBtn)
             grabDiv.append(showTrailBtn)
+            grabDiv.append(showWeatherBtn)
         }
     }
 })}
