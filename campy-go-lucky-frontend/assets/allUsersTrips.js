@@ -163,6 +163,8 @@ function getDirections(trip) {
     rightPanel.id = "right-panel"
     let map2 = document.createElement("div")
     map2.id = "map2"
+    let totalDistanace = document.createElement('p')
+    totalDistanace.id = "total"
 
 
     floatingPanel.appendChild(strong)
@@ -172,6 +174,7 @@ function getDirections(trip) {
     renderDelete.appendChild(floatingPanel)
     renderDelete.appendChild(rightPanel)
     renderDelete.appendChild(map2)
+    // rightPanel.appendChild(totalDistanace)
 
     getDirectionsMap(trip) 
 
@@ -207,6 +210,8 @@ function getDirectionsMap(trip) {
 
     calculateAndDisplayRoute(trip, directionsService, directionsRenderer);
 
+    computeTotalDistance(directionsRenderer.getDirections());
+
 }
 
 function calculateAndDisplayRoute(trip, directionsService, directionsRenderer) {
@@ -234,3 +239,14 @@ function calculateAndDisplayRoute(trip, directionsService, directionsRenderer) {
         }
     });
 }
+
+// function computeTotalDistance(result) {
+//     var total = 0;
+//     var myroute = result.routes[0];
+//     for (var i = 0; i < myroute.legs.length; i++) {
+//       total += myroute.legs[i].distance.value;
+//     }
+//     total = total / 1000;
+//     document.getElementById('total').innerHTML = total + ' km';
+//   }
+
