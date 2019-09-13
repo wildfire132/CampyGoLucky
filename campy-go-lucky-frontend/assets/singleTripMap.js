@@ -247,7 +247,7 @@ function displayCampSites(trip, centerPointHash, user) {
         }
         campList.appendChild(campBullet)
         campBullet.appendChild(campLink)
-        // campBullet.appendChild(dltBtn)
+        campBullet.appendChild(dltBtn)
     })
 
     renderDelete.appendChild(tripStops)
@@ -257,15 +257,16 @@ function displayCampSites(trip, centerPointHash, user) {
 
 }
 
-// async function deleteCampSite(trip, centerPointHash, user, campsite) {
-//     debugger
-//     let campsiteId = campsite.id
-//     const deleted = fetch(`http://localhost:3000/campsites/${campsiteId}`, {
-//         method: "DELETE"
-//     }).then(response => {
-//         console.log(response)
-//         debugger
-//     })
-//     singleTrip(trip, centerPointHash, user)
+async function deleteCampSite(trip, centerPointHash, user, campsite) {
+    // debugger
+    let campsiteId = campsite.id
+    const deleted = await fetch(`http://localhost:3000/campsites/${campsiteId}`, {
+        method: "DELETE"
+    }).then(response => {
+        console.log(response)
+        // debugger
+        getTrip(trip)
+    })
+    
 
-// }
+}
