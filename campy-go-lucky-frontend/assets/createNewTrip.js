@@ -23,7 +23,7 @@ let renderDelete = document.querySelector(".render-delete")
 deleteAllUnder(renderDelete)
 
 let jumbo = document.createElement("div")
-jumbo.classList.add("jumbotron")
+jumbo.classList.add("jumbotron", "glass")
 
 let appTitle = document.createElement("h1")
 appTitle.classList.add("display-4")

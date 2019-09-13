@@ -108,7 +108,7 @@ function displayMyTrips(user){
 
 
         tripInfoList.appendChild(numCampSites)
-        tripInfoList.appendChild(totalMileage)
+        // tripInfoList.appendChild(totalMileage)
         tripInfoList.appendChild(startDate)
         cardBody.appendChild(tripName)
         cardBody.appendChild(tripDesc)
