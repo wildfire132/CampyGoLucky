@@ -23,7 +23,7 @@ function myTrips(user){
         renderDelete.appendChild(noTrips)
     } else {
     user.trips.forEach(trip => {
-        debugger
+        
         let card = document.createElement("div")
         card.classList.add("card")
 

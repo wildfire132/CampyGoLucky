@@ -76,17 +76,19 @@ function getMarkers(latLong, trip) {
 
 
 function displayMarkers(trip, markersArray) {
-    debugger
     markersArray.forEach(function (marker) {
         // debugger
     contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +
+        // '<div id="showInfoButton">'+
+        //     '<button>Show Info</button>'+
+        // '</div>'+
         `<h3 id="firstHeading" class="firstHeading">${marker.camp_name}</h3>` +
         '<div id="bodyContent">' +
             `<p>Location: ${marker.address}</p>` +
             `<img src="${marker.imgUrl}">` +
-            `<a href="${marker.url}">Campground Information</a>` +
+            `<a target="_blank"href="${marker.url}">Campground Information</a>` +
         '</div>' +
     '</div>';
 
@@ -112,10 +114,11 @@ function displayMarkers(trip, markersArray) {
     }
 
     function getInfoCallback(map, content) {
-        let infowindow = new google.maps.InfoWindow({ content: content })
+        let infoWindow = new google.maps.InfoWindow({ content: content})
         return async function () {
-            infowindow.setContent(content)
-            await infowindow.open(map, this)
+            
+            infoWindow.setContent(content)
+            await infoWindow.open(map, this)
             let showInfoBtn = document.createElement("button")
             showInfoBtn.innerText = "Show Info"
             showInfoBtn.onclick = e => {
@@ -127,8 +130,11 @@ function displayMarkers(trip, markersArray) {
             addCampgroundBtn.onclick = e => {
                 associateCampgroundWithTrip(marker, trip)
             }
-            let grabDiv = document.querySelector(".gm-style-iw")
+            let grabDiv = document.getElementById("firstHeading")
+            let docBreak = document.createElement('br')
+            // let grabDiv = document.querySelector(".gm-style-iw")
             // debugger
+            grabDiv.append(docBreak)
             grabDiv.append(showInfoBtn)
             grabDiv.append(addCampgroundBtn)
         }
@@ -137,5 +143,4 @@ function displayMarkers(trip, markersArray) {
 }
 
 function associateCampgroundWithTrip(marker, trip) {
-    debugger
 }
