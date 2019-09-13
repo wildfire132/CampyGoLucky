@@ -1,5 +1,15 @@
-function myTrips(user){
+function myTrips(user) {
+    fetch(`http://localhost:3000/users/${user.id}`)
+    .then(response => response.json())
+    .then(userObject => {
+        console.log("user object", userObject)
+        displayMyTrips(userObject)
+    })
+}
+
+function displayMyTrips(user){
     console.log("MY TRIPS", user)
+
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
 
@@ -23,7 +33,7 @@ function myTrips(user){
         renderDelete.appendChild(noTrips)
     } else {
     user.trips.forEach(trip => {
-        debugger
+        // debugger
         let card = document.createElement("div")
         card.classList.add("card")
 
@@ -74,6 +84,16 @@ function myTrips(user){
             getMap(trip,trip.start_location,user)
         }
 
+        let directionsBtn = document.createElement("button")
+        directionsBtn.innerText = "Get Directions"
+        directionsBtn.classList.add("btn", "btn-outline-info")
+        directionsBtn.type = "button"
+        directionsBtn.onclick = e => {
+            getDirections(trip)
+        }
+
+
+
         tripInfoList.appendChild(numCampSites)
         tripInfoList.appendChild(totalMileage)
         tripInfoList.appendChild(startDate)
@@ -83,6 +103,7 @@ function myTrips(user){
         card.appendChild(cardBody)
         card.appendChild(infoBtn)
         card.appendChild(editTrip)
+        card.appendChild(directionsBtn)
         card.appendChild(tripInfoList)
         cardsHolder.appendChild(card)
 
