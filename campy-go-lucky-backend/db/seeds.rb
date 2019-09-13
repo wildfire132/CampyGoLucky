@@ -30,7 +30,7 @@ end
 
 50.times do |campsite|
     campname = Faker::Games::ElderScrolls.last_name
-    new_camp = Campsite.create(name: campname)
+    new_camp = Campsite.create(name: campname, img: Faker::Placeholdit.image)
     Trip.all.sample.campsites << new_camp
 end
 

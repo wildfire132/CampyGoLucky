@@ -38,7 +38,14 @@ function displayMyTrips(user){
         card.classList.add("card")
 
         let cardImg = document.createElement("img")
-        cardImg.src = "https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+        // debugger
+        let image;
+        if (trip.campsites.length > 0) {
+            image = trip.campsites[Math.floor(Math.random() * trip.campsites.length)].img
+        } else {
+            image = "https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+        }
+        cardImg.src = image
         cardImg.classList.add("card-img-top")
 
         let cardBody = document.createElement("div")
@@ -55,6 +62,10 @@ function displayMyTrips(user){
 
         let tripInfoList = document.createElement("ul")
         tripInfoList.classList.add("list-group", "list-group-flush")
+        
+        let tripStart = document.createElement("li")
+        tripStart.classList.add("list-group-item")
+        tripStart.innerText = `Start Location: ${trip.start_location}`
 
         let numCampSites = document.createElement("li")
         numCampSites.classList.add("list-group-item")
@@ -84,6 +95,7 @@ function displayMyTrips(user){
             getMap(trip,trip.start_location,user)
         }
 
+        tripInfoList.appendChild(tripStart)
         let directionsBtn = document.createElement("button")
         directionsBtn.innerText = "Get Directions"
         directionsBtn.classList.add("btn", "btn-outline-info")

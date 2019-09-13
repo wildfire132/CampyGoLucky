@@ -18,7 +18,7 @@ body {
 
 .cards .card {
     width: 30%;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
 }
 
 header#burly nav.navbar {
@@ -32,7 +32,7 @@ header#burly nav.navbar {
 .page-header {
     text-align:center;
     background-color: white;
-    
+    margin-top: 1rem;
     margin-bottom: 0;
 }
 

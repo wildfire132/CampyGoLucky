@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   get 'coms', to: 'coms#get_api_key'
   post 'campgrounds', to: 'campgrounds#get_campground_info'
   post 'weathers', to: 'weathers#get_weather'
+  get 'trails', to: 'trails#get_trails_markers'
 
 end

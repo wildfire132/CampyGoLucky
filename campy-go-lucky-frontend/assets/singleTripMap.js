@@ -79,6 +79,7 @@ initMap = (trip, centerPointHash,user) =>{
 //need to update with click event logic
 function getMarkers(latLong, trip) {
     // debugger
+    map.panTo(latLong)
     startLocation = trip.start_location
     
     // state = centerPointHash.address.split(", ")[1]
@@ -109,20 +110,20 @@ function displayMarkers(trip, markersArray) {
     contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +
-        // '<div id="showInfoButton">'+
-        //     '<button>Show Info</button>'+
-        // '</div>'+
-        `<h3 id="firstHeading" class="firstHeading">${marker.camp_name}</h3>` +
+        `<h4 id="firstHeading" class="firstHeading"><a target="_blank" href="${marker.url}">${marker.camp_name}</a></h4>` +
         '<div id="bodyContent">' +
             `<p>Location: ${marker.address}</p>` +
-            `<img src="${marker.imgUrl}">` +
-            `<a target="_blank"href="${marker.url}>Campground Information</a>` +
+            `<img style="max-height: 150px" src="${marker.imgUrl}">` +
+            // `<a href="${marker.url}">Campground Information</a>` +
         '</div>' +
     '</div>';
 
-    markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name })
+    // getWeatherInfo(marker)
 
-    google.maps.event.addListener(markertest, 'click', getInfoCallback(map, contentString))
+        // markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP })
+        let image = "https://drive.google.com/thumbnail?id=17mX0jcOmJa1gyxOnWkIAeB5zG7vIz2Eo"
+        markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP, icon: image })
+    google.maps.event.addListener(markertest, 'click', getInfoCallback(markertest, map, contentString))
 
     function getWeatherInfo(marker) {
     fetch("http://localhost:3000/weathers", {
@@ -154,23 +155,33 @@ function displayMarkers(trip, markersArray) {
         })
     }
 
-    function getInfoCallback(map, content) {
-        let infoWindow = new google.maps.InfoWindow({ content: content})
+    function getInfoCallback(markertest, map, content) {
+        let infowindow = new google.maps.InfoWindow({ content: content })
+
         return async function () {
-            
-            infoWindow.setContent(content)
-            await infoWindow.open(map, this)
+            // debugger
+            let grabDiv = document.querySelectorAll(".gm-style-iw")
+            if (grabDiv.length > 0) {
+                // debugger
+                grabDiv[0].remove()
+            }
+
+            infowindow.setContent(content)
+            await infowindow.open(map, this)
             let showInfoBtn = document.createElement("button")
+            showInfoBtn.classList.add("btn", "btn-outline-info")
             showInfoBtn.innerText = "Show Info"
             showInfoBtn.onclick = e => {
                 myCamps(marker, trip)
             }
 
             let addCampgroundBtn = document.createElement("button")
+            addCampgroundBtn.classList.add("btn", "btn-outline-success")
             addCampgroundBtn.innerText = "Add To Trip"
             addCampgroundBtn.onclick = e => {
                 associateCampgroundWithTrip(marker, trip)
             }
+<<<<<<< HEAD
 
             let showWeatherBtn = document.createElement("button")
             showWeatherBtn.innerText = "Forecast"
@@ -197,6 +208,13 @@ function displayMarkers(trip, markersArray) {
             // grabDiv.append(showInfoBtn)
             grabDiv.append(showWeatherBtn)
             grabDiv.append(addCampgroundBtn)
+=======
+            // debugger
+            grabDiv = document.querySelector(".gm-style-iw")
+            grabDiv.prepend(addCampgroundBtn)
+
+            grabDiv.append(showInfoBtn)
+>>>>>>> 94b0eb38bc79925a3140dd049ad0df3e273a2105
         }
     }
 })
@@ -208,6 +226,8 @@ function associateCampgroundWithTrip(marker, trip) {
     longitude = marker["latlong"]["lng"]
     name = marker["camp_name"]
     url = marker["url"]
+    // debugger
+    img = marker["imgUrl"]
     fetch('http://localhost:3000/campsites', {
         method: "POST", 
         headers: {
@@ -218,6 +238,7 @@ function associateCampgroundWithTrip(marker, trip) {
             longitude,
             name,
             url,
+            img,
             trip_id: trip.id
         })
     }).then(response => response.json())
@@ -271,6 +292,11 @@ function displayCampSites(trip, centerPointHash, user) {
         campLink.href = campsite.url
         campLink.target = "_blank"
         campLink.innerText = campsite.name
+        // let getTrailBtn = document.createElement("button")
+        // getTrailBtn.innerText = "Find Nearby Trails"
+        // getTrailBtn.onclick = e => {
+        //     getTrails(campsite, trip)
+        // }
 
         let dltBtn = document.createElement("button")
         dltBtn.classList.add("btn", "btn-outline-danger")
@@ -280,7 +306,8 @@ function displayCampSites(trip, centerPointHash, user) {
         }
         campList.appendChild(campBullet)
         campBullet.appendChild(campLink)
-        // campBullet.appendChild(dltBtn)
+        // campBullet.appendChild(getTrailBtn)
+        campBullet.appendChild(dltBtn)
     })
 
     renderDelete.appendChild(tripStops)
@@ -385,15 +412,42 @@ function renderWeatherInfo(weatherJson,marker){
     
 }
 
-// async function deleteCampSite(trip, centerPointHash, user, campsite) {
-//     debugger
-//     let campsiteId = campsite.id
-//     const deleted = fetch(`http://localhost:3000/campsites/${campsiteId}`, {
-//         method: "DELETE"
-//     }).then(response => {
-//         console.log(response)
-//         debugger
-//     })
-//     singleTrip(trip, centerPointHash, user)
+async function deleteCampSite(trip, centerPointHash, user, campsite) {
+    // debugger
+    let campsiteId = campsite.id
+    const deleted = await fetch(`http://localhost:3000/campsites/${campsiteId}`, {
+        method: "DELETE"
+    }).then(response => {
+        console.log(response)
+        // debugger
+        getTrip(trip)
+    })
+    
 
+}
+
+
+// function getTrails(campsite, trip) {
+//     // debugger
+//     map.panTo(latLong)
+
+//     // state = centerPointHash.address.split(", ")[1]
+//     fetch('http://localhost:3000/trails', {
+//         method: 'POST',
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify({
+//             latLong
+//         })
+//     })
+//         .then(res => res.json())
+//         .then(markersArray => {
+//             console.log("is the trail fetch working?", markersArray)
+
+<<<<<<< HEAD
+=======
+//             displayTrailMarkers(trip, markersArray)
+//         })
+>>>>>>> 94b0eb38bc79925a3140dd049ad0df3e273a2105
 // }
