@@ -9,10 +9,34 @@ class WeathersController < ApplicationController
         weekly_summary: response_hash["daily"]["summary"]
     }
 
+
+    current_icon = case response_hash["currently"]["icon"]
+    when "clear-day", "clear-night"
+        icon = "https://i.imgur.com/WhwmkoO.png"
+    when "rain"
+        icon = "https://i.imgur.com/d6iCdYU.png"
+    when "snow" 
+        icon = "https://i.imgur.com/HjSJTBN.png"
+    when "sleet"
+        icon = "https://i.imgur.com/nk50PD4.png"
+    when "wind"
+        icon = "https://i.imgur.com/J6XtvKt.png"
+    when "fog"
+        icon = "https://i.imgur.com/wXrFBo7.png"
+    when "cloudy", "mostly-cloudy"
+        icon = "https://i.imgur.com/d667pgi.png"
+    when "partly-cloudy-day", "partly-cloudy-night"
+        icon = "https://i.imgur.com/sBnF5jO.png"
+    else 
+        icon = "https://i.imgur.com/vhbGJo3.png" 
+    end
+
+    byebug
+
     @currentResults = {
-        current_time: Time.at(response_hash["currently"]["time"]).to_datetime.strftime("%a %m/%d"),
+        current_time: Time.at(response_hash["currently"]["time"]).to_datetime.strftime("%a %m/%d/%Y"),
         current_summary: response_hash["currently"]["summary"],
-        current_icon: response_hash["currently"]["icon"],
+        current_icon: current_icon,
         current_temperature: "#{response_hash["currently"]["temperature"]}℉",
         current_precipProb: "#{(response_hash["currently"]["precipProbability"]*100).to_s[0..4].to_i}%",
         current_visibility: "#{(response_hash["currently"]["visibility"]).to_s[0..3].to_i} miles",
@@ -23,7 +47,7 @@ class WeathersController < ApplicationController
 
     response_hash["daily"]["data"].each do |daily_weather|
         icon = case daily_weather["icon"]
-            when "clear-day" || "clear-night"
+            when "clear-day","clear-night"
                 icon = "https://i.imgur.com/WhwmkoO.png"
             when "rain"
                 icon = "https://i.imgur.com/d6iCdYU.png"
@@ -37,7 +61,7 @@ class WeathersController < ApplicationController
                 icon = "https://i.imgur.com/wXrFBo7.png"
             when "cloudy"
                 icon = "https://i.imgur.com/d667pgi.png"
-            when "partly-cloudy-day" || "partly-cloudy-night"
+            when "partly-cloudy-day","partly-cloudy-night"
                 icon = "https://i.imgur.com/sBnF5jO.png"
             else 
                 icon = "https://i.imgur.com/vhbGJo3.png" 

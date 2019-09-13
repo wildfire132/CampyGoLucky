@@ -26,7 +26,7 @@ class MarkersController < ApplicationController
             }
             @results << one_marker
         end
-        byebug
+        
         render :json => @results
 
   

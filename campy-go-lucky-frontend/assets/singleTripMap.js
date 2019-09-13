@@ -27,6 +27,7 @@ initMap = (trip, centerPointHash,user) =>{
     newSearch.type = "search"
     newSearch.placeholder = "Search by Location"
     let searchBtn = document.createElement("button")
+    searchBtn.classList.add("btn", "btn-outline-info")
     searchBtn.innerText = "Search"
     searchForm.onsubmit = e => {
         e.preventDefault()
@@ -115,11 +116,9 @@ function displayMarkers(trip, markersArray) {
         '<div id="bodyContent">' +
             `<p>Location: ${marker.address}</p>` +
             `<img src="${marker.imgUrl}">` +
-            `<a target="_blank"href="${marker.url}">Campground Information</a>` +
+            `<a target="_blank"href="${marker.url}>Campground Information</a>` +
         '</div>' +
     '</div>';
-
-    getWeatherInfo(marker)
 
     markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name })
 
@@ -135,9 +134,8 @@ function displayMarkers(trip, markersArray) {
             latlong: marker.latlong
         })
         }).then(response => response.json())
-        .then(json => {
-            console.log(json)
-            
+        .then(weatherJSON => {
+            renderWeatherInfo(weatherJSON,marker)
         })
     }
 
@@ -158,12 +156,21 @@ function displayMarkers(trip, markersArray) {
             addCampgroundBtn.onclick = e => {
                 associateCampgroundWithTrip(marker, trip)
             }
+
+            let showWeatherBtn = document.createElement("button")
+            showWeatherBtn.innerText = "Forecast"
+            showWeatherBtn.setAttribute("data-toggle","modal")
+            showWeatherBtn.setAttribute("data-target","#exampleModal")
+            showWeatherBtn.onclick = e =>{
+                getWeatherInfo(marker)
+            }
             let grabDiv = document.getElementById("firstHeading")
             let docBreak = document.createElement('br')
             // let grabDiv = document.querySelector(".gm-style-iw")
             // debugger
             grabDiv.append(docBreak)
             grabDiv.append(showInfoBtn)
+            grabDiv.append(showWeatherBtn)
             grabDiv.append(addCampgroundBtn)
         }
     }
@@ -235,6 +242,7 @@ function displayCampSites(trip, centerPointHash, user) {
         // debugger
         let campLink = document.createElement("a")
         campLink.classList.add("info")
+        campLink.style = "color:white"
         campLink.href = campsite.url
         campLink.target = "_blank"
         campLink.innerText = campsite.name
@@ -255,6 +263,93 @@ function displayCampSites(trip, centerPointHash, user) {
     tripStops.appendChild(campList)
     
 
+}
+
+function renderWeatherInfo(weatherJson,marker){
+    console.log(weatherJson)
+    console.log(marker)
+    let modalDiv = document.getElementsByClassName("modal-body")[0]
+    deleteAllUnder(modalDiv)
+
+    let modalTitle = document.getElementsByClassName("modal-title")[0]
+    modalTitle.innerText = marker.camp_name
+
+
+    let weatherHeader = document.createElement("h3")
+    weatherHeader.innerText = `Current Weather: ${weatherJson[0].current_time}`
+    let currentConditions = document.createElement("ul")
+
+    let currentIcon = document.createElement("img")
+        currentIcon.src = weatherJson[0].current_icon
+    let currentSummary = document.createElement("li")
+        currentSummary.innerText = `Summary: ${weatherJson[0].current_summary}`
+    let currentPrecipProb = document.createElement("li")
+        currentPrecipProb.innerText = `Precipitation Probability: ${weatherJson[0].current_precipProb}`
+    let currentTemperature = document.createElement("li")
+        currentTemperature.innerText = `Temperature: ${weatherJson[0].current_temperature}`
+    let currentVisibility = document.createElement("li")
+        currentVisibility.innerText = `Visibility: ${weatherJson[0].current_visibility}`
+    let currentWindSpeed = document.createElement("li")
+        currentWindSpeed.innerText = `Wind Speed: ${weatherJson[0].current_windSpeed}`
+    let weeklySummary = document.createElement("li")
+        weeklySummary.innerText = `Weekly Summary: ${weatherJson[2].weekly_summary}`
+    let textTalk = document.createElement("h3")
+        textTalk.innerText = "Weekly Forecast: "
+
+    let weatherContainer = document.createElement("div")
+        weatherContainer.className = "container"
+    let weatherCardGroupDiv = document.createElement("div")
+        weatherCardGroupDiv.className = "card-group"
+
+        modalDiv.appendChild(weatherHeader)
+        modalDiv.appendChild(currentConditions)
+        currentConditions.appendChild(currentIcon)
+        currentConditions.appendChild(currentSummary)
+        currentConditions.appendChild(currentPrecipProb)
+        currentConditions.appendChild(currentTemperature)
+        currentConditions.appendChild(currentVisibility)
+        currentConditions.appendChild(currentWindSpeed)
+        weatherContainer.appendChild(weatherCardGroupDiv)
+        modalDiv.appendChild(textTalk)
+        modalDiv.appendChild(weatherContainer)
+
+    weatherJson[1].forEach(function(weather){
+        let weatherCard = document.createElement("div")
+            weatherCard.className = "card"
+
+    let dailyTime = document.createElement("p")
+        dailyTime.innerText = `${weather.time}`
+    let dailyIcon = document.createElement("img")
+        dailyIcon.src = weather.icon
+    let dailySummary = document.createElement("p")
+        dailySummary.innerText = `${weather.daily_summary}`
+    let dailyPrecipProb = document.createElement("p")
+        dailyPrecipProb.innerText = `Precipitation probability: ${weather.chance_rain}`
+    let dailyHighTemperature = document.createElement("p")
+        dailyHighTemperature.innerText = `Highest Temp: ${weather.highest_temp}`
+    let dailyLowTemperature = document.createElement("p")
+        dailyLowTemperature.innerText = `Lowest Temp: ${weather.lowest_temp}`
+    let dailyVisibility = document.createElement("p")
+        dailyVisibility.innerText = `Visibility: ${weather.visibility}`
+    let dailyWindSpeed = document.createElement("p")
+        dailyWindSpeed.innerText = `Wind speed: ${weather.wind_speed}`
+    let dailyCloudCover = document.createElement("p")
+        dailyCloudCover.innerText = `Cloud coverage: ${weather.cloud_cover}`
+        
+    weatherCard.appendChild(dailyTime)
+    weatherCard.appendChild(dailySummary)
+    weatherCard.appendChild(dailyIcon)
+    weatherCard.appendChild(dailyHighTemperature)
+    weatherCard.appendChild(dailyLowTemperature)
+    weatherCard.appendChild(dailyPrecipProb)
+    weatherCard.appendChild(dailyVisibility)
+    weatherCard.appendChild(dailyWindSpeed)
+    weatherCard.appendChild(dailyCloudCover)
+
+    weatherCardGroupDiv.appendChild(weatherCard)
+
+    })
+    
 }
 
 // async function deleteCampSite(trip, centerPointHash, user, campsite) {
