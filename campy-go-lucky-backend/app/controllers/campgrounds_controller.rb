@@ -64,10 +64,11 @@ class CampgroundsController < ApplicationController
             array_of_activities << activity.text
         end
 
-        @results {
-            arrayOfActivities: array_of_activities
+        @results = {
+            arrayOfActivities: array_of_activities,
             camp_info: camp_info[0].text.strip
         }
+
         render :json => @results
     end
 end
