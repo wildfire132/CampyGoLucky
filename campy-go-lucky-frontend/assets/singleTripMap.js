@@ -108,7 +108,7 @@ function displayMarkers(trip, markersArray) {
     contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +
-        `<h4 id="firstHeading" class="firstHeading"><a href="${marker.url}">${marker.camp_name}</a></h4>` +
+        `<h4 id="firstHeading" class="firstHeading"><a target="_blank" href="${marker.url}">${marker.camp_name}</a></h4>` +
         '<div id="bodyContent">' +
             `<p>Location: ${marker.address}</p>` +
             `<img style="max-height: 150px" src="${marker.imgUrl}">` +
