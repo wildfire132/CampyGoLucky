@@ -118,8 +118,6 @@ function displayMarkers(trip, markersArray) {
         '</div>' +
     '</div>';
 
-    // getWeatherInfo(marker)
-
         // markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP })
         let image = "https://drive.google.com/thumbnail?id=17mX0jcOmJa1gyxOnWkIAeB5zG7vIz2Eo"
         markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP, icon: image })
@@ -154,6 +152,28 @@ function displayMarkers(trip, markersArray) {
             renderCampInfo(campJson,marker)
         })
     }
+
+    function getTrailsMarkers(marker, trip) {
+        map.panTo(marker.latlong)
+        // state = centerPointHash.address.split(", ")[1]
+        fetch('http://localhost:3000/gettrails', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                latLong: marker.latlong
+            })
+        })
+        .then(res => res.json())
+        .then(markersArray => {
+            console.log("is the trail fetch working?", markersArray)
+            displayTrailMarkers(marker, markersArray)
+            // displayTrailMarkers(trip, markersArray)
+        })
+    }
+
+    
 
     function getInfoCallback(markertest, map, content) {
         let infowindow = new google.maps.InfoWindow({ content: content })
@@ -200,6 +220,13 @@ function displayMarkers(trip, markersArray) {
                 showCampInfo(marker)
             }
 
+            let showTrailsBtn = document.createElement("button")
+            showTrailsBtn.innerText = "Nearby Trails"
+            showTrailsBtn.classList.add("btn", "btn-outline-warning")
+            showTrailsBtn.onclick = e =>{
+                getTrailsMarkers(marker,trip)
+            }
+
             // let grabDiv = document.getElementById("firstHeading")
             // let docBreak = document.createElement('br')
             // grabDiv = document.querySelector(".gm-style-iw")
@@ -211,6 +238,7 @@ function displayMarkers(trip, markersArray) {
             grabDiv.append(showWeatherBtn)
             // debugger
             grabDiv.append(addCampgroundBtn)
+            grabDiv.prepend(showTrailsBtn)
         }
     }
 })
@@ -311,6 +339,69 @@ function displayCampSites(trip, centerPointHash, user) {
     tripStops.appendChild(campList)
 }
 
+function renderTrailInfo(marker){
+    console.log("Render trail Marker", marker)
+    let modalDiv = document.getElementsByClassName("modal-body")[0]
+    deleteAllUnder(modalDiv)
+
+    let modalTitle = document.getElementsByClassName("modal-title")[0]
+    modalTitle.innerText = marker.trail_name
+
+    let trailInfoPic = document.createElement("img")
+    if (marker.imgUrl){
+        trailInfoPic.src = marker.imgUrl
+    } else {
+        trailInfoPic.src = "https://i.imgur.com/JuRnsax.png"
+    }
+
+    let trailSummary = document.createElement("p")
+        trailSummary.innerText = marker.summary
+    let trailRating = document.createElement("p")
+        trailRating.innerText = `Trail Rating: ${marker.rating}`
+    let trailUrl = document.createElement("a")
+        trailUrl.innerText = "More Info"
+        trailUrl.href = marker.url
+    let trailInfoText = document.createElement("p")
+        trailInfoText.innerText = "Trail Info:"
+    let trailInfoBreak = document.createElement("br")
+    let trailLocation = document.createElement("p")
+        trailLocation.innerText =  `Location: ${marker.address}`
+    
+    let trailName = document.createElement("p")
+        trailName.innerText = "Statistics:" 
+    let trailList = document.createElement("ul")
+    
+    let trailDifficulty = document.createElement("li")
+    trailDifficulty.innerText = `Trail Difficulty: ${marker.difficulty}`
+
+    let trailLength = document.createElement("li")
+    trailLength.innerText = `Trail Length: ${marker.lengthInMilesToPoint}`
+
+    let trailAscent = document.createElement("li")
+    trailAscent.innerText = `Trail Ascent ${marker.ascentHeight}`
+    let trailDescent = document.createElement("li")
+    trailDescent.innerText = `Trail Descent ${marker.descentHeight}`
+
+    debugger 
+
+    modalDiv.appendChild(trailInfoPic)
+    modalDiv.appendChild(trailSummary)
+    modalDiv.appendChild(trailLocation)
+    modalDiv.appendChild(trailRating)
+    modalDiv.appendChild(trailUrl)
+    modalDiv.appendChild(trailName)
+    
+
+    trailName.appendChild(trailList)
+
+    
+    trailList.appendChild(trailDifficulty)
+    trailList.appendChild(trailLength)
+    trailList.appendChild(trailAscent)
+    trailList.appendChild(trailDescent)
+    
+}
+
 function renderCampInfo(campJson,marker){
     console.log("RenderCampInfo", campJson)
     console.log("Render camp Marker", marker)
@@ -320,23 +411,30 @@ function renderCampInfo(campJson,marker){
     let modalTitle = document.getElementsByClassName("modal-title")[0]
     modalTitle.innerText = marker.camp_name
 
-    let campInfoText = document.createElement("h3")
+    let campInfoPic = document.createElement("img")
+        campInfoPic.src = marker.imgUrl
+    let campInfoText = document.createElement("p")
         campInfoText.innerText = "Campsite Info:"
+    let campInfoBreak = document.createElement("br")
     let campInfo = document.createElement("p")
         campInfo.innerText =  campJson.camp_info
     
-    let campActivitiesText = document.createElement("h3")
+    let campActivitiesText = document.createElement("p")
         campActivitiesText.innerText = "Nearby Activities:"
+    let campActivitiesList = document.createElement("ul")
     
-    campJson.forEach(function(activity){
-        let campActivity = document.createElement("p")
+    campJson.arrayOfActivities.forEach(function(activity){
+        let campActivity = document.createElement("li")
         campActivity.innerText = activity
-        campActivitiesText.appendChild(campActivity)
+        campActivitiesList.appendChild(campActivity)
     })
 
+    modalDiv.appendChild(campInfoPic)
     modalDiv.appendChild(campInfoText)
+    campInfoText.appendChild(campInfoBreak)
     campInfoText.appendChild(campInfo)
     modalDiv.appendChild(campActivitiesText)
+    modalDiv.appendChild(campActivitiesList)
 
 }
 
@@ -347,7 +445,12 @@ function renderWeatherInfo(weatherJson,marker){
     deleteAllUnder(modalDiv)
 
     let modalTitle = document.getElementsByClassName("modal-title")[0]
+
+    if (marker.camp_name){
     modalTitle.innerText = marker.camp_name
+    } else {
+    modalTitle.innerText = marker.trail_name
+    }
 
     let weatherHeader = document.createElement("h3")
     weatherHeader.innerText = `Current Weather: ${weatherJson[0].current_time}`
@@ -426,6 +529,87 @@ function renderWeatherInfo(weatherJson,marker){
     
 }
 
+function displayTrailMarkers(marker,markersArray){
+markersArray.forEach(function (marker) {
+    // debugger
+contentString = '<div id="content">' +
+    '<div id="siteNotice">' +
+    '</div>' +
+    `<h4 id="firstHeading" class="firstHeading"><a target="_blank" href="${marker.url}">${marker.trail_name}</a></h4>` +
+    '<div id="bodyContent">' +
+        `<p>Location: ${marker.address}</p>` +
+        `<img style="max-height: 150px" src="${marker.imgUrl}">` +
+        // `<a href="${marker.url}">Campground Information</a>` +
+    '</div>' +
+'</div>';
+
+    // markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP })
+    let image = "https://drive.google.com/thumbnail?id=1jv84erVM1HcV_jZPiFxUB6XgCX2uPi1E"
+    markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP, icon: image })
+    google.maps.event.addListener(markertest, 'click', getInfoCallbackTrails(markertest, map, contentString))
+
+    function getWeatherInfo(marker) {
+        fetch("http://localhost:3000/weathers", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                latlong: marker.latlong
+            })
+            }).then(response => response.json())
+            .then(weatherJSON => {
+                renderWeatherInfo(weatherJSON,marker)
+            })
+        }
+    
+
+    function getInfoCallbackTrails(markertest,map,content){
+        let infowindow = new google.maps.InfoWindow({ content: content })
+
+        return async function () {
+            // debugger
+            let grabDiv = document.querySelectorAll(".gm-style-iw")
+            if (grabDiv.length > 0) {
+                // debugger
+                grabDiv[0].remove()
+            }
+
+            infowindow.setContent(content)
+            await infowindow.open(map, this)
+            let showInfoBtn = document.createElement("button")
+            showInfoBtn.classList.add("btn", "btn-outline-info")
+            showInfoBtn.innerText = "Show Info"
+            showInfoBtn.onclick = e => {
+                myCamps(marker, trip)
+            }
+
+            let showWeatherBtn = document.createElement("button")
+            showWeatherBtn.innerText = "Forecast"
+            showWeatherBtn.classList.add("btn", "btn-outline-info")
+            showWeatherBtn.setAttribute("data-toggle","modal")
+            showWeatherBtn.setAttribute("data-target","#exampleModal")
+            showWeatherBtn.onclick = e =>{
+                getWeatherInfo(marker)
+            }
+
+            let showTrailBtn = document.createElement("button")
+            showTrailBtn.innerText = "Trail Info"
+            showTrailBtn.classList.add("btn", "btn-outline-warning")
+            showTrailBtn.setAttribute("data-toggle","modal")
+            showTrailBtn.setAttribute("data-target","#exampleModal")
+            showTrailBtn.onclick = e =>{
+                renderTrailInfo(marker)
+            }
+
+            grabDiv = document.querySelector(".gm-style-iw")
+            // grabDiv.append(showInfoBtn)
+            grabDiv.append(showWeatherBtn)
+            grabDiv.append(showTrailBtn)
+        }
+    }
+})}
+
 async function deleteCampSite(trip, centerPointHash, user, campsite) {
     // debugger
     let campsiteId = campsite.id
@@ -441,24 +625,4 @@ async function deleteCampSite(trip, centerPointHash, user, campsite) {
 }
 
 
-// function getTrails(campsite, trip) {
-//     // debugger
-//     map.panTo(latLong)
 
-//     // state = centerPointHash.address.split(", ")[1]
-//     fetch('http://localhost:3000/trails', {
-//         method: 'POST',
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({
-//             latLong
-//         })
-//     })
-//         .then(res => res.json())
-//         .then(markersArray => {
-//             console.log("is the trail fetch working?", markersArray)
-
-//             displayTrailMarkers(trip, markersArray)
-//         })
-// }
