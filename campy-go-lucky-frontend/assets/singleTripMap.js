@@ -108,11 +108,11 @@ function displayMarkers(trip, markersArray) {
     contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +
-        `<h3 id="firstHeading" class="firstHeading">${marker.camp_name}</h3>` +
+        `<h4 id="firstHeading" class="firstHeading"><a href="${marker.url}">${marker.camp_name}</a></h4>` +
         '<div id="bodyContent">' +
             `<p>Location: ${marker.address}</p>` +
-            // `<img src="${marker.imgUrl}">` +
-            `<a href="${marker.url}">Campground Information</a>` +
+            `<img style="max-height: 150px" src="${marker.imgUrl}">` +
+            // `<a href="${marker.url}">Campground Information</a>` +
         '</div>' +
     '</div>';
 
@@ -150,21 +150,23 @@ function displayMarkers(trip, markersArray) {
             infowindow.setContent(content)
             await infowindow.open(map, this)
             let showInfoBtn = document.createElement("button")
+            showInfoBtn.classList.add("btn", "btn-outline-info")
             showInfoBtn.innerText = "Show Info"
             showInfoBtn.onclick = e => {
                 myCamps(marker, trip)
             }
 
             let addCampgroundBtn = document.createElement("button")
-            addCampgroundBtn.id = "testingg"
+            addCampgroundBtn.classList.add("btn", "btn-outline-success")
             addCampgroundBtn.innerText = "Add To Trip"
             addCampgroundBtn.onclick = e => {
                 associateCampgroundWithTrip(marker, trip)
             }
             // debugger
             grabDiv = document.querySelector(".gm-style-iw")
+            grabDiv.prepend(addCampgroundBtn)
+
             grabDiv.append(showInfoBtn)
-            grabDiv.append(addCampgroundBtn)
         }
     }
 })
@@ -176,6 +178,8 @@ function associateCampgroundWithTrip(marker, trip) {
     longitude = marker["latlong"]["lng"]
     name = marker["camp_name"]
     url = marker["url"]
+    // debugger
+    img = marker["imgUrl"]
     fetch('http://localhost:3000/campsites', {
         method: "POST", 
         headers: {
@@ -186,6 +190,7 @@ function associateCampgroundWithTrip(marker, trip) {
             longitude,
             name,
             url,
+            img,
             trip_id: trip.id
         })
     }).then(response => response.json())

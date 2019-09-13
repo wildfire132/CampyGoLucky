@@ -38,7 +38,14 @@ function displayMyTrips(user){
         card.classList.add("card")
 
         let cardImg = document.createElement("img")
-        cardImg.src = "https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+        // debugger
+        let image;
+        if (trip.campsites.length > 0) {
+            image = trip.campsites[Math.floor(Math.random() * trip.campsites.length)].img
+        } else {
+            image = "https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+        }
+        cardImg.src = image
         cardImg.classList.add("card-img-top")
 
         let cardBody = document.createElement("div")

@@ -10,7 +10,7 @@ class CampsitesController < ApplicationController
     end
 
     def create
-        campsite = Campsite.new(name: params[:name], latitude: params[:latitude], longitude: params[:longitude], url: params[:url])
+        campsite = Campsite.new(name: params[:name], latitude: params[:latitude], longitude: params[:longitude], url: params[:url], img: params[:img])
         trip = Trip.all.find(params[:trip_id])
         trip.campsites << campsite
         # campsite.trips << trip
