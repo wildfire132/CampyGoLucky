@@ -141,3 +141,96 @@ function displayMyTrips(user){
     //         </div>
 
 }
+
+function getDirections(trip) {
+    let renderDelete = document.querySelector(".render-delete")
+    deleteAllUnder(renderDelete)
+
+    let floatingPanel = document.createElement("div")
+    floatingPanel.style = "display: none"
+    floatingPanel.id = "floating-panel"
+    let strong = document.createElement("strong")
+    strong.innerText = "Start:"
+    let selectStart = document.createElement("select")
+    selectStart.innerText = "Start"
+    selectStart.id = "start"
+    let otherStrong = document.createElement("strong")
+    otherStrong.innerText = "End:"
+    let otherSelect = document.createElement("select")
+    otherSelect.innerText = "End"
+    otherSelect.id = "end"
+    let rightPanel = document.createElement("div")
+    rightPanel.id = "right-panel"
+    let map2 = document.createElement("div")
+    map2.id = "map2"
+
+
+    floatingPanel.appendChild(strong)
+    floatingPanel.appendChild(selectStart)
+    floatingPanel.appendChild(otherStrong)
+    floatingPanel.appendChild(otherSelect)
+    renderDelete.appendChild(floatingPanel)
+    renderDelete.appendChild(rightPanel)
+    renderDelete.appendChild(map2)
+
+    getDirectionsMap(trip) 
+
+    //     < div style = "display:none"id = "floating-panel" >
+    //         <strong>Start:</strong>
+    //         <select id="start">
+    //             Start
+    //   </select>
+    //         <br>
+    //             <strong>End:</strong>
+    //             <select id="end">
+    //                 End
+    //   </select>
+    // </div>
+    //         <div id="right-panel"></div>
+    //         <div id="map"></div>
+}
+
+function getDirectionsMap(trip) {
+    let startPointLat = parseFloat(trip.campsites[0].latitude)
+    let startPointLong = parseFloat(trip.campsites[0].longitude)
+    console.log("start lat", startPointLat)
+    console.log("start long", startPointLong)
+    debugger
+    var directionsRenderer = new google.maps.DirectionsRenderer;
+    var directionsService = new google.maps.DirectionsService;
+    var map2 = new google.maps.Map(document.getElementById('map2'), {
+        zoom: 7,
+        center: { lat: startPointLat, lng: startPointLong }
+    });
+    directionsRenderer.setMap(map2);
+    directionsRenderer.setPanel(document.getElementById('right-panel'));
+
+    calculateAndDisplayRoute(trip, directionsService, directionsRenderer);
+
+}
+
+function calculateAndDisplayRoute(trip, directionsService, directionsRenderer) {
+    let campsites = trip.campsites 
+    let waypointsArray = []
+    campsites.forEach(campsite => {
+        let latitude = campsite.latitude
+        let longitude = campsite.longitude
+        waypointsArray.push({ location: new google.maps.LatLng(latitude, longitude) })
+    })
+    let startPointLat = parseFloat(trip.campsites[0].latitude)
+    let startPointLong = parseFloat(trip.campsites[0].longitude)
+    var start = document.getElementById('start').value;
+    var end = document.getElementById('end').value;
+    directionsService.route({
+        origin: trip.start_location,
+        destination: trip.start_location,
+        waypoints: waypointsArray,
+        travelMode: 'DRIVING'
+    }, function (response, status) {
+        if (status === 'OK') {
+            directionsRenderer.setDirections(response);
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
+}

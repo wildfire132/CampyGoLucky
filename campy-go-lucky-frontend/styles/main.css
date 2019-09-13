@@ -148,6 +148,8 @@ footer p {
     float: right;
     width: 390px;
     overflow: auto;
+    background-color: burlywood;
+
   }
   #map2 {
     margin-right: 400px;
