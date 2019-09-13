@@ -317,6 +317,25 @@ function renderCampInfo(campJson,marker){
 
     let modalTitle = document.getElementsByClassName("modal-title")[0]
     modalTitle.innerText = marker.camp_name
+
+    let campInfoText = document.createElement("h3")
+        campInfoText.innerText = "Campsite Info:"
+    let campInfo = document.createElement("p")
+        campInfo.innerText =  campJson.camp_info
+    
+    let campActivitiesText = document.createElement("h3")
+        campActivitiesText.innerText = "Nearby Activities:"
+    
+    campJson.forEach(function(activity){
+        let campActivity = document.createElement("p")
+        campActivity.innerText = activity
+        campActivitiesText.appendChild(campActivity)
+    })
+
+    modalDiv.appendChild(campInfoText)
+    campInfoText.appendChild(campInfo)
+    modalDiv.appendChild(campActivitiesText)
+
 }
 
 function renderWeatherInfo(weatherJson,marker){
@@ -327,7 +346,6 @@ function renderWeatherInfo(weatherJson,marker){
 
     let modalTitle = document.getElementsByClassName("modal-title")[0]
     modalTitle.innerText = marker.camp_name
-
 
     let weatherHeader = document.createElement("h3")
     weatherHeader.innerText = `Current Weather: ${weatherJson[0].current_time}`
