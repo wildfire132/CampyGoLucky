@@ -222,10 +222,11 @@ function displayCampSites(trip, centerPointHash, user) {
         let campBullet = document.createElement("li")
         campBullet.id = "camp"
         campBullet.classList.add("list-inline-item")
-
+        debugger
         let campLink = document.createElement("a")
         campLink.classList.add("info")
         campLink.href = campsite.url
+        campLink.target = "_blank"
         campLink.innerText = campsite.name
 
         let dltBtn = document.createElement("button")
