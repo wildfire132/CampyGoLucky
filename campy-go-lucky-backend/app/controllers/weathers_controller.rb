@@ -54,9 +54,13 @@ class WeathersController < ApplicationController
             cloud_cover: "#{(daily_weather["cloudCover"]*100).to_s[0..4].to_i}%",
             visibility: "#{(daily_weather["visibility"]).to_s[0..3].to_i} miles"
         }  
-        byebug
+        
         @weeklyResults << new_hash
     end
+
+    @weeklyResults.pop
+    @weeklyResults.shift(2)
+
         render json: [@currentResults,@weeklyResults,@summary]
     end
 end
