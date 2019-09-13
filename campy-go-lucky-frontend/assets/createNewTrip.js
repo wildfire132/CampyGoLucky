@@ -56,6 +56,16 @@ tripInput.id = "inputTripName"
 tripInput.placeholder = "Enter trip name"
 tripInput.setAttribute("aria-describedby","emailHelp")
 
+let tripDescLabel = document.createElement("label")
+tripDescLabel.for = "inputTripDesc"
+tripDescLabel.innerText = "Trip Description"
+let tripDescInput = document.createElement("input")
+tripDescInput.type = "text"
+tripDescInput.classList.add("form-control")
+tripDescInput.id = "inputTripDesc"
+tripDescInput.placeholder = "Enter trip description"
+tripDescInput.setAttribute("aria-describedby", "emailHelp")
+
 let startingLocationLabel = document.createElement("label")
 startingLocationLabel.for = "inputStartLocation"
 startingLocationLabel.innerText = "Starting Location"
@@ -83,6 +93,8 @@ submitBtn.innerText = "Let's Go!"
 
 formStyle.appendChild(tripLabel)
 formStyle.appendChild(tripInput)
+formStyle.appendChild(tripDescLabel)
+formStyle.appendChild(tripDescInput)
 formStyle.appendChild(startingLocationLabel)
 formStyle.appendChild(startingLocationInput)
 formStyle.appendChild(startDateLabel)
@@ -103,8 +115,9 @@ function createFormSubmission(e,user){
 
     console.log(user)
 let tripName = e.target[0].value
-let startLocation = e.target[1].value
-let startDate = e.target[2].value
+let tripDesc = e.target[1].value
+let startLocation = e.target[2].value
+let startDate = e.target[3].value
 
 fetch(`http://localhost:3000/trips`,{
     method: "POST",
@@ -114,6 +127,7 @@ fetch(`http://localhost:3000/trips`,{
     body: JSON.stringify({
         user_id: user.id,
         name: tripName,
+        description: tripDesc,
         start_location: startLocation,
         start_date: startDate
     })
