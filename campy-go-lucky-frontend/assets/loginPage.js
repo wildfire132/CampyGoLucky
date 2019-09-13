@@ -24,7 +24,7 @@ function loginPage(){
     let glassSpan = document.createElement("span")
     glass.appendChild(glassSpan)
     let jumbo = document.createElement("div")
-    jumbo.classList.add("jumbotron")
+    jumbo.classList.add("jumbotron", "glass")
     glassSpan.appendChild(jumbo)
 
     let appTitle = document.createElement("h1")
