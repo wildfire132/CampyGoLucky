@@ -110,11 +110,15 @@ function displayMarkers(trip, markersArray) {
         '<div id="siteNotice">' +
         '</div>' +
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0bc152277602e35754bc3068db83ec87cfef5829
         `<h4 id="firstHeading" class="firstHeading"><a target="_blank" href="${marker.url}">${marker.camp_name}</a></h4>` +
         '<div id="bodyContent">' +
             `<p>Location: ${marker.address}</p>` +
             `<img style="max-height: 150px" src="${marker.imgUrl}">` +
             // `<a href="${marker.url}">Campground Information</a>` +
+<<<<<<< HEAD
 =======
         // '<div id="showInfoButton">'+
         //     '<button>Show Info</button>'+
@@ -125,6 +129,9 @@ function displayMarkers(trip, markersArray) {
             `<img src="${marker.imgUrl}">` +
             `<a target="_blank"href="${marker.url}">Campground Information</a>` +
 >>>>>>> 1275f74eaa8cfa4d8ab9233d25cd7ead2e9f1a42
+=======
+
+>>>>>>> 0bc152277602e35754bc3068db83ec87cfef5829
         '</div>' +
     '</div>';
 
@@ -149,6 +156,9 @@ function displayMarkers(trip, markersArray) {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0bc152277602e35754bc3068db83ec87cfef5829
     function getInfoCallback(markertest, map, content) {
         let infowindow = new google.maps.InfoWindow({ content: content })
 
@@ -162,6 +172,7 @@ function displayMarkers(trip, markersArray) {
 
             infowindow.setContent(content)
             await infowindow.open(map, this)
+<<<<<<< HEAD
 =======
     function getInfoCallback(map, content) {
         let infoWindow = new google.maps.InfoWindow({ content: content})
@@ -170,6 +181,9 @@ function displayMarkers(trip, markersArray) {
             infoWindow.setContent(content)
             await infoWindow.open(map, this)
 >>>>>>> 1275f74eaa8cfa4d8ab9233d25cd7ead2e9f1a42
+=======
+
+>>>>>>> 0bc152277602e35754bc3068db83ec87cfef5829
             let showInfoBtn = document.createElement("button")
             showInfoBtn.classList.add("btn", "btn-outline-info")
             showInfoBtn.innerText = "Show Info"
@@ -184,17 +198,27 @@ function displayMarkers(trip, markersArray) {
                 associateCampgroundWithTrip(marker, trip)
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0bc152277602e35754bc3068db83ec87cfef5829
             // debugger
             grabDiv = document.querySelector(".gm-style-iw")
             grabDiv.prepend(addCampgroundBtn)
 
+<<<<<<< HEAD
 =======
             let grabDiv = document.getElementById("firstHeading")
+=======
+
+>>>>>>> 0bc152277602e35754bc3068db83ec87cfef5829
             let docBreak = document.createElement('br')
             // let grabDiv = document.querySelector(".gm-style-iw")
             // debugger
             grabDiv.append(docBreak)
+<<<<<<< HEAD
 >>>>>>> 1275f74eaa8cfa4d8ab9233d25cd7ead2e9f1a42
+=======
+>>>>>>> 0bc152277602e35754bc3068db83ec87cfef5829
             grabDiv.append(showInfoBtn)
         }
     }
