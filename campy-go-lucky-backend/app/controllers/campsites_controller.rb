@@ -18,4 +18,10 @@ class CampsitesController < ApplicationController
         render json: [campsite, trip]
     end
 
+    # def destroy
+    #     campsite = Campsite.find(params[:id])
+    #     campsite.destroy
+        
+    # end
+
 end

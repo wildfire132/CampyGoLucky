@@ -22,13 +22,32 @@ initMap = (trip, centerPointHash,user) =>{
             myTrips(user)
         }
 
+    let searchForm = document.createElement("form")
+    let newSearch = document.createElement("input")
+    newSearch.type = "search"
+    newSearch.placeholder = "Search by Location"
+    let searchBtn = document.createElement("button")
+    searchBtn.innerText = "Search"
+    searchForm.onsubmit = e => {
+        e.preventDefault()
+        // debugger
+        let startLocation = e.target.children[0].value
+        getMap(trip, startLocation, user)
+    }
+    searchForm.appendChild(newSearch)
+    searchForm.appendChild(searchBtn)
+
+
+
     // debugger
     let newTripMap = document.createElement("div")
     newTripMap.id = "map"
 
     renderDelete.appendChild(myTripName)
     renderDelete.appendChild(backToTripsBtn)
+    renderDelete.appendChild(searchForm)
     renderDelete.appendChild(newTripMap)
+
 
     let tripStops = document.createElement("div")
     tripStops.classList.add("trip-stops")
@@ -52,7 +71,7 @@ initMap = (trip, centerPointHash,user) =>{
 
     // map.panTo(position)
     // debugger
-    displayCampSites(trip)
+    displayCampSites(trip, centerPointHash, user)
     
 }
 
@@ -168,7 +187,7 @@ function associateCampgroundWithTrip(marker, trip) {
         })
     }).then(response => response.json())
     .then(data => {
-        debugger
+        // debugger
 
         getTrip(trip)
         
@@ -188,7 +207,7 @@ function getTrip(trip) {
     }) 
 }
 
-function displayCampSites(trip) {
+function displayCampSites(trip, centerPointHash, user) {
     // debugger
 
     let renderDelete = document.querySelector(".render-delete")
@@ -210,21 +229,22 @@ function displayCampSites(trip) {
         let campBullet = document.createElement("li")
         campBullet.id = "camp"
         campBullet.classList.add("list-inline-item")
-
+        debugger
         let campLink = document.createElement("a")
         campLink.classList.add("info")
         campLink.href = campsite.url
+        campLink.target = "_blank"
         campLink.innerText = campsite.name
 
         let dltBtn = document.createElement("button")
         dltBtn.classList.add("btn", "btn-outline-danger")
         dltBtn.innerText = "Delete Campsite"
         dltBtn.onclick = e => {
-            deleteCampSite(campsite)
+            deleteCampSite(trip, centerPointHash, user, campsite)
         }
         campList.appendChild(campBullet)
         campBullet.appendChild(campLink)
-        campBullet.appendChild(dltBtn)
+        // campBullet.appendChild(dltBtn)
     })
 
     renderDelete.appendChild(tripStops)
@@ -234,6 +254,15 @@ function displayCampSites(trip) {
 
 }
 
-function deleteCampSite(campsite) {
-    debugger
-}
+// async function deleteCampSite(trip, centerPointHash, user, campsite) {
+//     debugger
+//     let campsiteId = campsite.id
+//     const deleted = fetch(`http://localhost:3000/campsites/${campsiteId}`, {
+//         method: "DELETE"
+//     }).then(response => {
+//         console.log(response)
+//         debugger
+//     })
+//     singleTrip(trip, centerPointHash, user)
+
+// }
