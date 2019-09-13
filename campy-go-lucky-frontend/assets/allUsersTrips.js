@@ -96,6 +96,16 @@ function displayMyTrips(user){
         }
 
         tripInfoList.appendChild(tripStart)
+        let directionsBtn = document.createElement("button")
+        directionsBtn.innerText = "Get Directions"
+        directionsBtn.classList.add("btn", "btn-outline-info")
+        directionsBtn.type = "button"
+        directionsBtn.onclick = e => {
+            getDirections(trip)
+        }
+
+
+
         tripInfoList.appendChild(numCampSites)
         tripInfoList.appendChild(totalMileage)
         tripInfoList.appendChild(startDate)
@@ -105,6 +115,7 @@ function displayMyTrips(user){
         card.appendChild(cardBody)
         card.appendChild(infoBtn)
         card.appendChild(editTrip)
+        card.appendChild(directionsBtn)
         card.appendChild(tripInfoList)
         cardsHolder.appendChild(card)
 

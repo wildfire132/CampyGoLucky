@@ -114,6 +114,7 @@ function displayMarkers(trip, markersArray) {
             `<p>Location: ${marker.address}</p>` +
             `<img style="max-height: 150px" src="${marker.imgUrl}">` +
             // `<a href="${marker.url}">Campground Information</a>` +
+
         '</div>' +
     '</div>';
 
@@ -150,6 +151,7 @@ function displayMarkers(trip, markersArray) {
 
             infowindow.setContent(content)
             await infowindow.open(map, this)
+
             let showInfoBtn = document.createElement("button")
             showInfoBtn.classList.add("btn", "btn-outline-info")
             showInfoBtn.innerText = "Show Info"
@@ -167,6 +169,11 @@ function displayMarkers(trip, markersArray) {
             grabDiv = document.querySelector(".gm-style-iw")
             grabDiv.prepend(addCampgroundBtn)
 
+
+            let docBreak = document.createElement('br')
+            // let grabDiv = document.querySelector(".gm-style-iw")
+            // debugger
+            grabDiv.append(docBreak)
             grabDiv.append(showInfoBtn)
         }
     }
