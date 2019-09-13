@@ -58,7 +58,7 @@ initMap = (trip, centerPointHash,user) =>{
 
 //need to update with click event logic
 function getMarkers(latLong, trip) {
-    // debugger
+    map.panTo(latLong)
     startLocation = trip.start_location
     
     // state = centerPointHash.address.split(", ")[1]
@@ -101,8 +101,8 @@ function displayMarkers(trip, markersArray) {
     '</div>';
 
     // getWeatherInfo(marker)
-
-    markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name })
+    let image = "https://drive.google.com/thumbnail?id=17mX0jcOmJa1gyxOnWkIAeB5zG7vIz2Eo"
+    markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP, icon: image })
 
     google.maps.event.addListener(markertest, 'click', getInfoCallback(map, contentString))
 
