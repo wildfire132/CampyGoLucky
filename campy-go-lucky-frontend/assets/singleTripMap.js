@@ -78,6 +78,7 @@ initMap = (trip, centerPointHash,user) =>{
 //need to update with click event logic
 function getMarkers(latLong, trip) {
     // debugger
+    map.panTo(latLong)
     startLocation = trip.start_location
     
     // state = centerPointHash.address.split(", ")[1]
@@ -118,7 +119,7 @@ function displayMarkers(trip, markersArray) {
 
     // getWeatherInfo(marker)
 
-    markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name })
+        markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP })
     google.maps.event.addListener(markertest, 'click', getInfoCallback(markertest, map, contentString))
 
     function getWeatherInfo(marker) {
@@ -243,6 +244,11 @@ function displayCampSites(trip, centerPointHash, user) {
         campLink.href = campsite.url
         campLink.target = "_blank"
         campLink.innerText = campsite.name
+        // let getTrailBtn = document.createElement("button")
+        // getTrailBtn.innerText = "Find Nearby Trails"
+        // getTrailBtn.onclick = e => {
+        //     getTrails(campsite, trip)
+        // }
 
         let dltBtn = document.createElement("button")
         dltBtn.classList.add("btn", "btn-outline-danger")
@@ -252,6 +258,7 @@ function displayCampSites(trip, centerPointHash, user) {
         }
         campList.appendChild(campBullet)
         campBullet.appendChild(campLink)
+        // campBullet.appendChild(getTrailBtn)
         campBullet.appendChild(dltBtn)
     })
 
@@ -275,3 +282,26 @@ async function deleteCampSite(trip, centerPointHash, user, campsite) {
     
 
 }
+
+
+// function getTrails(campsite, trip) {
+//     // debugger
+//     map.panTo(latLong)
+
+//     // state = centerPointHash.address.split(", ")[1]
+//     fetch('http://localhost:3000/trails', {
+//         method: 'POST',
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify({
+//             latLong
+//         })
+//     })
+//         .then(res => res.json())
+//         .then(markersArray => {
+//             console.log("is the trail fetch working?", markersArray)
+
+//             displayTrailMarkers(trip, markersArray)
+//         })
+// }
