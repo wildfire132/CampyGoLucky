@@ -357,6 +357,9 @@ function renderTrailInfo(marker){
 
     let trailSummary = document.createElement("p")
         trailSummary.innerText = marker.summary
+    if (trailSummary.innerText.split(" ")[0] == "Needs") {
+        trailSummary.innerText = "Trail description is not available."
+    }
     let trailRating = document.createElement("p")
         trailRating.innerText = `Trail Rating: ${marker.rating}`
     let trailUrl = document.createElement("a")
