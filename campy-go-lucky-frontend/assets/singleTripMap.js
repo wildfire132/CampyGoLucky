@@ -119,8 +119,7 @@ function displayMarkers(trip, markersArray) {
     // getWeatherInfo(marker)
 
     markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name })
-
-    google.maps.event.addListener(markertest, 'click', getInfoCallback(map, contentString))
+    google.maps.event.addListener(markertest, 'click', getInfoCallback(markertest, map, contentString))
 
     function getWeatherInfo(marker) {
         fetch("http://localhost:3000/weathers", {
@@ -137,9 +136,17 @@ function displayMarkers(trip, markersArray) {
             })
     }
 
-    function getInfoCallback(map, content) {
+    function getInfoCallback(markertest, map, content) {
         let infowindow = new google.maps.InfoWindow({ content: content })
+
         return async function () {
+            // debugger
+            let grabDiv = document.querySelectorAll(".gm-style-iw")
+            if (grabDiv.length > 0) {
+                // debugger
+                grabDiv[0].remove()
+            }
+
             infowindow.setContent(content)
             await infowindow.open(map, this)
             let showInfoBtn = document.createElement("button")
@@ -149,12 +156,13 @@ function displayMarkers(trip, markersArray) {
             }
 
             let addCampgroundBtn = document.createElement("button")
+            addCampgroundBtn.id = "testingg"
             addCampgroundBtn.innerText = "Add To Trip"
             addCampgroundBtn.onclick = e => {
                 associateCampgroundWithTrip(marker, trip)
             }
-            let grabDiv = document.querySelector(".gm-style-iw")
             // debugger
+            grabDiv = document.querySelector(".gm-style-iw")
             grabDiv.append(showInfoBtn)
             grabDiv.append(addCampgroundBtn)
         }
