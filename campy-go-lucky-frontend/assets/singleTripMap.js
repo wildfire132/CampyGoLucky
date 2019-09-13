@@ -117,7 +117,7 @@ function displayMarkers(trip, markersArray) {
         '</div>' +
     '</div>';
 
-    // getWeatherInfo(marker)
+    getWeatherInfo(marker)
 
         // markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP })
         let image = "https://drive.google.com/thumbnail?id=17mX0jcOmJa1gyxOnWkIAeB5zG7vIz2Eo"
@@ -125,18 +125,18 @@ function displayMarkers(trip, markersArray) {
     google.maps.event.addListener(markertest, 'click', getInfoCallback(markertest, map, contentString))
 
     function getWeatherInfo(marker) {
-        fetch("http://localhost:3000/weathers", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                latlong: marker.latlong
-            })
+    fetch("http://localhost:3000/weathers", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            latlong: marker.latlong
+        })
         }).then(response => response.json())
-            .then(json => {
-                console.log(json)
-            })
+        .then(json => {
+            console.log(json)
+        })
     }
 
     function getInfoCallback(markertest, map, content) {
