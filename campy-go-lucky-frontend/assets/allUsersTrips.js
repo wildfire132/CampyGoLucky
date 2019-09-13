@@ -141,3 +141,4 @@ function displayMyTrips(user){
     //         </div>
 
 }
+
