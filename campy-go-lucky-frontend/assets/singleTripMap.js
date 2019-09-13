@@ -167,6 +167,7 @@ function associateCampgroundWithTrip(marker, trip) {
     latitude = marker["latlong"]["lat"]
     longitude = marker["latlong"]["lng"]
     name = marker["camp_name"]
+    url = marker["url"]
     fetch('http://localhost:3000/campsites', {
         method: "POST", 
         headers: {
@@ -176,6 +177,7 @@ function associateCampgroundWithTrip(marker, trip) {
             latitude,
             longitude,
             name,
+            url,
             trip_id: trip.id
         })
     }).then(response => response.json())
@@ -222,7 +224,7 @@ function displayCampSites(trip, centerPointHash, user) {
         let campBullet = document.createElement("li")
         campBullet.id = "camp"
         campBullet.classList.add("list-inline-item")
-        debugger
+        // debugger
         let campLink = document.createElement("a")
         campLink.classList.add("info")
         campLink.href = campsite.url
