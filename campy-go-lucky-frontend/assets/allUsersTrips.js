@@ -55,6 +55,10 @@ function displayMyTrips(user){
 
         let tripInfoList = document.createElement("ul")
         tripInfoList.classList.add("list-group", "list-group-flush")
+        
+        let tripStart = document.createElement("li")
+        tripStart.classList.add("list-group-item")
+        tripStart.innerText = `Start Location: ${trip.start_location}`
 
         let numCampSites = document.createElement("li")
         numCampSites.classList.add("list-group-item")
@@ -84,6 +88,7 @@ function displayMyTrips(user){
             getMap(trip,trip.start_location,user)
         }
 
+        tripInfoList.appendChild(tripStart)
         tripInfoList.appendChild(numCampSites)
         tripInfoList.appendChild(totalMileage)
         tripInfoList.appendChild(startDate)
