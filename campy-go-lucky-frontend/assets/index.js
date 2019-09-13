@@ -1,6 +1,18 @@
 document.addEventListener("DOMContentLoaded", scriptSrcGoogleMaps())
 
 async function scriptSrcGoogleMaps(){
+    // let html = document.querySelector("html")
+    // html.style = `background: url(../styles/pic#{Math.floor(Math.random() * 8)}.jpg) no-repeat center center fixed;
+    //     - webkit - background - size: cover;
+    // -moz - background - size: cover;
+    // -o - background - size: cover;
+    // background - size: cover;`
+    // let body = document.querySelector("body")
+    // body.style = `background: url(./pic#{Math.floor(Math.random() * 8)}.jpg) no-repeat center center fixed;
+    //     - webkit - background - size: cover;
+    // -moz - background - size: cover;
+    // -o - background - size: cover;
+    // background - size: cover;`
     fetch("http://localhost:3000/coms")
     .then(response => response.json())
     .then(json => {

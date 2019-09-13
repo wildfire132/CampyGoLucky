@@ -14,6 +14,7 @@ function displayMyTrips(user){
     deleteAllUnder(renderDelete)
 
     let myTrips = document.createElement("h1")
+    myTrips.classList.add("trip-name")
     myTrips.innerText = "My Trips"
 
     let cardsHolder = document.createElement("div")

@@ -13,6 +13,7 @@ initMap = (trip, centerPointHash,user) =>{
     deleteAllUnder(renderDelete)
 
     let myTripName = document.createElement("h1")
+    myTripName.classList.add("trip-name")
     myTripName.innerText = trip.name
 
     let backToTripsBtn = document.createElement("button")
