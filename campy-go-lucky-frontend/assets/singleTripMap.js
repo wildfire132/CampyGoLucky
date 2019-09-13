@@ -30,6 +30,12 @@ initMap = (trip, centerPointHash,user) =>{
     renderDelete.appendChild(backToTripsBtn)
     renderDelete.appendChild(newTripMap)
 
+    let tripStops = document.createElement("div")
+    tripStops.classList.add("trip-stops")
+    renderDelete.appendChild(tripStops)
+
+    // add dom element to contain trip campsites
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: centerPointHash.latlong,
         zoom: 9 
@@ -46,6 +52,7 @@ initMap = (trip, centerPointHash,user) =>{
 
     // map.panTo(position)
     // debugger
+    displayCampSites(trip)
     
 }
 
@@ -76,6 +83,7 @@ function getMarkers(latLong, trip) {
 
 
 function displayMarkers(trip, markersArray) {
+    // debugger
     markersArray.forEach(function (marker) {
         // debugger
     contentString = '<div id="content">' +
@@ -143,4 +151,89 @@ function displayMarkers(trip, markersArray) {
 }
 
 function associateCampgroundWithTrip(marker, trip) {
+    // debugger
+    latitude = marker["latlong"]["lat"]
+    longitude = marker["latlong"]["lng"]
+    name = marker["camp_name"]
+    fetch('http://localhost:3000/campsites', {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify({
+            latitude,
+            longitude,
+            name,
+            trip_id: trip.id
+        })
+    }).then(response => response.json())
+    .then(data => {
+        debugger
+
+        getTrip(trip)
+        
+    })
+    // post request with campground info to campsites controller
+    // shovel newly created campsite into the trips campsites
+    // lastly should render campsite card at the bottom of the tripmap page with other campsites
+}
+
+function getTrip(trip) {
+    fetch(`http://localhost:3000/trips/${trip.id}`)
+    .then(response => response.json())
+    .then(trippy => {
+        console.log("did it", trippy)
+        // debugger
+        displayCampSites(trippy)
+    }) 
+}
+
+function displayCampSites(trip) {
+    // debugger
+
+    let renderDelete = document.querySelector(".render-delete")
+    let tripStops = document.querySelector(".trip-stops")
+    // tripStops.classList.add("trip-stops")
+
+    while (tripStops.firstChild) {
+        tripStops.firstChild.remove()
+    }
+
+    let tripStopsHeader = document.createElement("h2")
+    tripStopsHeader.classList.add("page-header")
+    tripStopsHeader.innerText = "Campsites On This Trip"
+
+    let campList = document.createElement("ul")
+    campList.classList.add("flexy")
+    // debugger
+    trip.campsites.forEach(campsite => {
+        let campBullet = document.createElement("li")
+        campBullet.id = "camp"
+        campBullet.classList.add("list-inline-item")
+
+        let campLink = document.createElement("a")
+        campLink.classList.add("info")
+        campLink.href = campsite.url
+        campLink.innerText = campsite.name
+
+        let dltBtn = document.createElement("button")
+        dltBtn.classList.add("btn", "btn-outline-danger")
+        dltBtn.innerText = "Delete Campsite"
+        dltBtn.onclick = e => {
+            deleteCampSite(campsite)
+        }
+        campList.appendChild(campBullet)
+        campBullet.appendChild(campLink)
+        campBullet.appendChild(dltBtn)
+    })
+
+    renderDelete.appendChild(tripStops)
+    tripStops.appendChild(tripStopsHeader)
+    tripStops.appendChild(campList)
+    
+
+}
+
+function deleteCampSite(campsite) {
+    debugger
 }

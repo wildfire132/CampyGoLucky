@@ -1,5 +1,15 @@
-function myTrips(user){
+function myTrips(user) {
+    fetch(`http://localhost:3000/users/${user.id}`)
+    .then(response => response.json())
+    .then(userObject => {
+        console.log("user object", userObject)
+        displayMyTrips(userObject)
+    })
+}
+
+function displayMyTrips(user){
     console.log("MY TRIPS", user)
+
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
 
@@ -23,7 +33,7 @@ function myTrips(user){
         renderDelete.appendChild(noTrips)
     } else {
     user.trips.forEach(trip => {
-        
+        // debugger
         let card = document.createElement("div")
         card.classList.add("card")
 
