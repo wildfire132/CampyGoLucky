@@ -15,9 +15,17 @@ function loginPage(){
 
     let renderDelete = document.querySelector(".render-delete")
     deleteAllUnder(renderDelete)
-
+    let dropShawdow = document.createElement("div")
+    dropShawdow.classList.add("drop-shadow")
+    renderDelete.appendChild(dropShawdow)
+    let glass = document.createElement("glass")
+    glass.classList.add("glass")
+    dropShawdow.appendChild(glass)
+    let glassSpan = document.createElement("span")
+    glass.appendChild(glassSpan)
     let jumbo = document.createElement("div")
     jumbo.classList.add("jumbotron")
+    glassSpan.appendChild(jumbo)
 
     let appTitle = document.createElement("h1")
     appTitle.classList.add("display-4")

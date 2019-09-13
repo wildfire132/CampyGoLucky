@@ -4,6 +4,8 @@ class CreateCampsites < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :latitude
       t.string :longitude
+      t.string :url
+      t.string :img
 
       t.timestamps
     end

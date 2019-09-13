@@ -45,5 +45,29 @@ class CampgroundsController < ApplicationController
     #   def set_params
     #     params.require(:campground).permit(:latlong, :address, :camp_name)
     #   end
+    def get_campground_info
+        mechanize = Mechanize.new
+        page = mechanize.get("#{params["info_url"]}")
+    
+        camp_info = page.search("div.description")
+        
+        activities = page.search("div.activity div")
+    
+        puts camp_info[0].text.strip
+    
+        puts ""
+    
+        puts "Activities"
 
+        array_of_activities = []
+        activities.each do |activity|
+            array_of_activities << activity.text
+        end
+
+        @results {
+            arrayOfActivities: array_of_activities
+            camp_info: camp_info[0].text.strip
+        }
+        render :json => @results
+    end
 end

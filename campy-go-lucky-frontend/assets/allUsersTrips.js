@@ -14,6 +14,7 @@ function displayMyTrips(user){
     deleteAllUnder(renderDelete)
 
     let myTrips = document.createElement("h1")
+    myTrips.classList.add("trip-name")
     myTrips.innerText = "My Trips"
 
     let cardsHolder = document.createElement("div")
@@ -38,7 +39,14 @@ function displayMyTrips(user){
         card.classList.add("card")
 
         let cardImg = document.createElement("img")
-        cardImg.src = "https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+        // debugger
+        let image;
+        if (trip.campsites.length > 0) {
+            image = trip.campsites[Math.floor(Math.random() * trip.campsites.length)].img
+        } else {
+            image = "https://wikiclipart.com/wp-content/uploads/2017/07/Images-about-possums-on-cartoon-and-clipart.jpg"
+        }
+        cardImg.src = image
         cardImg.classList.add("card-img-top")
 
         let cardBody = document.createElement("div")
@@ -51,10 +59,14 @@ function displayMyTrips(user){
 
         let tripDesc = document.createElement("p")
         tripDesc.classList.add("card-text")
-        tripDesc.innerText = "Placeholder -> probably should add trip.description attribute"
+        tripDesc.innerText = trip.description
 
         let tripInfoList = document.createElement("ul")
         tripInfoList.classList.add("list-group", "list-group-flush")
+        
+        let tripStart = document.createElement("li")
+        tripStart.classList.add("list-group-item")
+        tripStart.innerText = `Start Location: ${trip.start_location}`
 
         let numCampSites = document.createElement("li")
         numCampSites.classList.add("list-group-item")
@@ -84,6 +96,7 @@ function displayMyTrips(user){
             getMap(trip,trip.start_location,user)
         }
 
+        tripInfoList.appendChild(tripStart)
         let directionsBtn = document.createElement("button")
         directionsBtn.innerText = "Get Directions"
         directionsBtn.classList.add("btn", "btn-outline-info")
@@ -101,7 +114,7 @@ function displayMyTrips(user){
         cardBody.appendChild(tripDesc)
         card.appendChild(cardImg)
         card.appendChild(cardBody)
-        card.appendChild(infoBtn)
+        // card.appendChild(infoBtn)
         card.appendChild(editTrip)
         card.appendChild(directionsBtn)
         card.appendChild(tripInfoList)

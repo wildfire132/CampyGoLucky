@@ -12,27 +12,46 @@ div.trip-info {
     margin-top: 22vh;
 }
 
-body {
-    /* background-image: url("./forestroad2.jpg"); */
+html, body {
+    /* background: url("./pic1.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat; */
+
+    background: url(./pic2.jpg) no-repeat center center fixed;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
 }
+
 
 .cards .card {
     width: 30%;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
 }
 
 header#burly nav.navbar {
-    background-color: burlywood;
+    background-color: #4d351f;
+}
+
+.logo {
+    color: burlywood;
+    display: inline;
 }
 
 .info {
     margin-right: 1rem;
 }
+.trip-name {
+    color: white;
+    text-shadow: 2px 1px black;
+}
 
 .page-header {
     text-align:center;
-    background-color: white;
-    
+    color: white;
+    text-shadow: 2px 1px black;
+    margin-top: 1rem;
     margin-bottom: 0;
 }
 
@@ -60,7 +79,7 @@ footer p {
 
 #map {
     height: 80%;
-    width: 90%;
+    width: 100%;
   }
 
   #map2 {
@@ -80,9 +99,8 @@ footer p {
   }
 
   #camp {
-      border: 1px solid black;
       border-radius: 1rem;
-      background-color: burlywood;
+      background-color: #4d351f;
       padding: 1rem;
       margin-top: 1rem;
   }

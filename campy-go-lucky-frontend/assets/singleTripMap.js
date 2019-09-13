@@ -13,6 +13,7 @@ initMap = (trip, centerPointHash,user) =>{
     deleteAllUnder(renderDelete)
 
     let myTripName = document.createElement("h1")
+    myTripName.classList.add("trip-name")
     myTripName.innerText = trip.name
 
     let backToTripsBtn = document.createElement("button")
@@ -22,13 +23,33 @@ initMap = (trip, centerPointHash,user) =>{
             myTrips(user)
         }
 
+    let searchForm = document.createElement("form")
+    let newSearch = document.createElement("input")
+    newSearch.type = "search"
+    newSearch.placeholder = "Search by Location"
+    let searchBtn = document.createElement("button")
+    searchBtn.classList.add("btn", "btn-outline-info")
+    searchBtn.innerText = "Search"
+    searchForm.onsubmit = e => {
+        e.preventDefault()
+        // debugger
+        let startLocation = e.target.children[0].value
+        getMap(trip, startLocation, user)
+    }
+    searchForm.appendChild(newSearch)
+    searchForm.appendChild(searchBtn)
+
+
+
     // debugger
     let newTripMap = document.createElement("div")
     newTripMap.id = "map"
 
     renderDelete.appendChild(myTripName)
     renderDelete.appendChild(backToTripsBtn)
+    renderDelete.appendChild(searchForm)
     renderDelete.appendChild(newTripMap)
+
 
     let tripStops = document.createElement("div")
     tripStops.classList.add("trip-stops")
@@ -52,12 +73,13 @@ initMap = (trip, centerPointHash,user) =>{
 
     // map.panTo(position)
     // debugger
-    displayCampSites(trip)
+    displayCampSites(trip, centerPointHash, user)
     
 }
 
 //need to update with click event logic
 function getMarkers(latLong, trip) {
+    // debugger
     map.panTo(latLong)
     startLocation = trip.start_location
     
@@ -89,61 +111,106 @@ function displayMarkers(trip, markersArray) {
     contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +
-        // '<div id="showInfoButton">'+
-        //     '<button>Show Info</button>'+
-        // '</div>'+
-        `<h3 id="firstHeading" class="firstHeading">${marker.camp_name}</h3>` +
+        `<h4 id="firstHeading" class="firstHeading"><a target="_blank" href="${marker.url}">${marker.camp_name}</a></h4>` +
         '<div id="bodyContent">' +
             `<p>Location: ${marker.address}</p>` +
-            `<img src="${marker.imgUrl}">` +
-            `<a target="_blank"href="${marker.url}">Campground Information</a>` +
+            `<img style="max-height: 150px" src="${marker.imgUrl}">` +
+            // `<a href="${marker.url}">Campground Information</a>` +
         '</div>' +
     '</div>';
 
     // getWeatherInfo(marker)
-    let image = "https://drive.google.com/thumbnail?id=17mX0jcOmJa1gyxOnWkIAeB5zG7vIz2Eo"
-    markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP, icon: image })
 
-    google.maps.event.addListener(markertest, 'click', getInfoCallback(map, contentString))
+        // markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP })
+        let image = "https://drive.google.com/thumbnail?id=17mX0jcOmJa1gyxOnWkIAeB5zG7vIz2Eo"
+        markertest = new google.maps.Marker({ position: marker.latlong, map: map, title: marker.name, animation: google.maps.Animation.DROP, icon: image })
+    google.maps.event.addListener(markertest, 'click', getInfoCallback(markertest, map, contentString))
 
     function getWeatherInfo(marker) {
-        fetch("http://localhost:3000/weathers", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                latlong: marker.latlong
-            })
+    fetch("http://localhost:3000/weathers", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            latlong: marker.latlong
+        })
         }).then(response => response.json())
-            .then(json => {
-                console.log(json)
-            })
+        .then(weatherJSON => {
+            renderWeatherInfo(weatherJSON,marker)
+        })
     }
 
-    function getInfoCallback(map, content) {
-        let infoWindow = new google.maps.InfoWindow({ content: content})
+    function showCampInfo(marker){
+        fetch("http://localhost:3000/campgrounds", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            info_url: marker.url
+        })
+        }).then(response => response.json())
+        .then(campJson => {
+            renderCampInfo(campJson,marker)
+        })
+    }
+
+    function getInfoCallback(markertest, map, content) {
+        let infowindow = new google.maps.InfoWindow({ content: content })
+
         return async function () {
-            
-            infoWindow.setContent(content)
-            await infoWindow.open(map, this)
+            // debugger
+            let grabDiv = document.querySelectorAll(".gm-style-iw")
+            if (grabDiv.length > 0) {
+                // debugger
+                grabDiv[0].remove()
+            }
+
+            infowindow.setContent(content)
+            await infowindow.open(map, this)
             let showInfoBtn = document.createElement("button")
+            showInfoBtn.classList.add("btn", "btn-outline-info")
             showInfoBtn.innerText = "Show Info"
             showInfoBtn.onclick = e => {
                 myCamps(marker, trip)
             }
 
             let addCampgroundBtn = document.createElement("button")
+            addCampgroundBtn.classList.add("btn", "btn-outline-success")
             addCampgroundBtn.innerText = "Add To Trip"
             addCampgroundBtn.onclick = e => {
                 associateCampgroundWithTrip(marker, trip)
             }
-            let grabDiv = document.getElementById("firstHeading")
-            let docBreak = document.createElement('br')
-            // let grabDiv = document.querySelector(".gm-style-iw")
+
+            let showWeatherBtn = document.createElement("button")
+            showWeatherBtn.innerText = "Forecast"
+            showWeatherBtn.classList.add("btn", "btn-outline-info")
+            showWeatherBtn.setAttribute("data-toggle","modal")
+            showWeatherBtn.setAttribute("data-target","#exampleModal")
+            showWeatherBtn.onclick = e =>{
+                getWeatherInfo(marker)
+            }
+
+            let showCampBtn = document.createElement("button")
+            showCampBtn.innerText = "Camp Info"
+            showCampBtn.classList.add("btn", "btn-outline-warning")
+            showCampBtn.setAttribute("data-toggle","modal")
+            showCampBtn.setAttribute("data-target","#exampleModal")
+            showCampBtn.onclick = e =>{
+                showCampInfo(marker)
+            }
+
+            // let grabDiv = document.getElementById("firstHeading")
+            // let docBreak = document.createElement('br')
+            // grabDiv = document.querySelector(".gm-style-iw")
             // debugger
-            grabDiv.append(docBreak)
-            grabDiv.append(showInfoBtn)
+            // grabDiv.append(docBreak)
+            grabDiv = document.querySelector(".gm-style-iw")
+            grabDiv.append(showCampBtn)
+            // grabDiv.append(showInfoBtn)
+            grabDiv.append(showWeatherBtn)
+            // debugger
             grabDiv.append(addCampgroundBtn)
         }
     }
@@ -155,6 +222,9 @@ function associateCampgroundWithTrip(marker, trip) {
     latitude = marker["latlong"]["lat"]
     longitude = marker["latlong"]["lng"]
     name = marker["camp_name"]
+    url = marker["url"]
+    // debugger
+    img = marker["imgUrl"]
     fetch('http://localhost:3000/campsites', {
         method: "POST", 
         headers: {
@@ -164,11 +234,13 @@ function associateCampgroundWithTrip(marker, trip) {
             latitude,
             longitude,
             name,
+            url,
+            img,
             trip_id: trip.id
         })
     }).then(response => response.json())
     .then(data => {
-        debugger
+        // debugger
 
         getTrip(trip)
         
@@ -188,7 +260,7 @@ function getTrip(trip) {
     }) 
 }
 
-function displayCampSites(trip) {
+function displayCampSites(trip, centerPointHash, user) {
     // debugger
 
     let renderDelete = document.querySelector(".render-delete")
@@ -210,30 +282,166 @@ function displayCampSites(trip) {
         let campBullet = document.createElement("li")
         campBullet.id = "camp"
         campBullet.classList.add("list-inline-item")
-
+        // debugger
         let campLink = document.createElement("a")
         campLink.classList.add("info")
+        campLink.style = "color:burlywood"
         campLink.href = campsite.url
+        campLink.target = "_blank"
         campLink.innerText = campsite.name
+        // let getTrailBtn = document.createElement("button")
+        // getTrailBtn.innerText = "Find Nearby Trails"
+        // getTrailBtn.onclick = e => {
+        //     getTrails(campsite, trip)
+        // }
 
         let dltBtn = document.createElement("button")
-        dltBtn.classList.add("btn", "btn-outline-danger")
+        dltBtn.classList.add("btn", "btn-outline-warning")
         dltBtn.innerText = "Delete Campsite"
         dltBtn.onclick = e => {
-            deleteCampSite(campsite)
+            deleteCampSite(trip, centerPointHash, user, campsite)
         }
         campList.appendChild(campBullet)
         campBullet.appendChild(campLink)
+        // campBullet.appendChild(getTrailBtn)
         campBullet.appendChild(dltBtn)
     })
 
     renderDelete.appendChild(tripStops)
     tripStops.appendChild(tripStopsHeader)
     tripStops.appendChild(campList)
+}
+
+function renderCampInfo(campJson,marker){
+    console.log("RenderCampInfo", campJson)
+    console.log("Render camp Marker", marker)
+    let modalDiv = document.getElementsByClassName("modal-body")[0]
+    deleteAllUnder(modalDiv)
+
+    let modalTitle = document.getElementsByClassName("modal-title")[0]
+    modalTitle.innerText = marker.camp_name
+}
+
+function renderWeatherInfo(weatherJson,marker){
+    console.log(weatherJson)
+    console.log(marker)
+    let modalDiv = document.getElementsByClassName("modal-body")[0]
+    deleteAllUnder(modalDiv)
+
+    let modalTitle = document.getElementsByClassName("modal-title")[0]
+    modalTitle.innerText = marker.camp_name
+
+
+    let weatherHeader = document.createElement("h3")
+    weatherHeader.innerText = `Current Weather: ${weatherJson[0].current_time}`
+    let currentConditions = document.createElement("ul")
+
+    let currentIcon = document.createElement("img")
+        currentIcon.src = weatherJson[0].current_icon
+    let currentSummary = document.createElement("li")
+        currentSummary.innerText = `Summary: ${weatherJson[0].current_summary}`
+    let currentPrecipProb = document.createElement("li")
+        currentPrecipProb.innerText = `Precipitation Probability: ${weatherJson[0].current_precipProb}`
+    let currentTemperature = document.createElement("li")
+        currentTemperature.innerText = `Temperature: ${weatherJson[0].current_temperature}`
+    let currentVisibility = document.createElement("li")
+        currentVisibility.innerText = `Visibility: ${weatherJson[0].current_visibility}`
+    let currentWindSpeed = document.createElement("li")
+        currentWindSpeed.innerText = `Wind Speed: ${weatherJson[0].current_windSpeed}`
+    let weeklySummary = document.createElement("li")
+        weeklySummary.innerText = `Weekly Summary: ${weatherJson[2].weekly_summary}`
+    let textTalk = document.createElement("h3")
+        textTalk.innerText = "Weekly Forecast: "
+
+    let weatherContainer = document.createElement("div")
+        weatherContainer.className = "container"
+    let weatherCardGroupDiv = document.createElement("div")
+        weatherCardGroupDiv.className = "card-group"
+
+        modalDiv.appendChild(weatherHeader)
+        modalDiv.appendChild(currentConditions)
+        currentConditions.appendChild(currentIcon)
+        currentConditions.appendChild(currentSummary)
+        currentConditions.appendChild(currentPrecipProb)
+        currentConditions.appendChild(currentTemperature)
+        currentConditions.appendChild(currentVisibility)
+        currentConditions.appendChild(currentWindSpeed)
+        weatherContainer.appendChild(weatherCardGroupDiv)
+        modalDiv.appendChild(textTalk)
+        modalDiv.appendChild(weatherContainer)
+
+    weatherJson[1].forEach(function(weather){
+        let weatherCard = document.createElement("div")
+            weatherCard.className = "card"
+
+    let dailyTime = document.createElement("p")
+        dailyTime.innerText = `${weather.time}`
+    let dailyIcon = document.createElement("img")
+        dailyIcon.src = weather.icon
+    let dailySummary = document.createElement("p")
+        dailySummary.innerText = `${weather.daily_summary}`
+    let dailyPrecipProb = document.createElement("p")
+        dailyPrecipProb.innerText = `Precipitation probability: ${weather.chance_rain}`
+    let dailyHighTemperature = document.createElement("p")
+        dailyHighTemperature.innerText = `Highest Temp: ${weather.highest_temp}`
+    let dailyLowTemperature = document.createElement("p")
+        dailyLowTemperature.innerText = `Lowest Temp: ${weather.lowest_temp}`
+    let dailyVisibility = document.createElement("p")
+        dailyVisibility.innerText = `Visibility: ${weather.visibility}`
+    let dailyWindSpeed = document.createElement("p")
+        dailyWindSpeed.innerText = `Wind speed: ${weather.wind_speed}`
+    let dailyCloudCover = document.createElement("p")
+        dailyCloudCover.innerText = `Cloud coverage: ${weather.cloud_cover}`
+        
+    weatherCard.appendChild(dailyTime)
+    weatherCard.appendChild(dailySummary)
+    weatherCard.appendChild(dailyIcon)
+    weatherCard.appendChild(dailyHighTemperature)
+    weatherCard.appendChild(dailyLowTemperature)
+    weatherCard.appendChild(dailyPrecipProb)
+    weatherCard.appendChild(dailyVisibility)
+    weatherCard.appendChild(dailyWindSpeed)
+    weatherCard.appendChild(dailyCloudCover)
+
+    weatherCardGroupDiv.appendChild(weatherCard)
+
+    })
+    
+}
+
+async function deleteCampSite(trip, centerPointHash, user, campsite) {
+    // debugger
+    let campsiteId = campsite.id
+    const deleted = await fetch(`http://localhost:3000/campsites/${campsiteId}`, {
+        method: "DELETE"
+    }).then(response => {
+        console.log(response)
+        // debugger
+        getTrip(trip)
+    })
     
 
 }
 
-function deleteCampSite(campsite) {
-    debugger
-}
+
+// function getTrails(campsite, trip) {
+//     // debugger
+//     map.panTo(latLong)
+
+//     // state = centerPointHash.address.split(", ")[1]
+//     fetch('http://localhost:3000/trails', {
+//         method: 'POST',
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify({
+//             latLong
+//         })
+//     })
+//         .then(res => res.json())
+//         .then(markersArray => {
+//             console.log("is the trail fetch working?", markersArray)
+
+//             displayTrailMarkers(trip, markersArray)
+//         })
+// }

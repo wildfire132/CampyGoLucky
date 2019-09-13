@@ -57,12 +57,12 @@ function displayTrip(user,trip) {
 
 }
 
-async function deleteCampSite(campsite) {
-    let campsiteId = campsite.id
-    await fetch(`http://localhost:3000/campsites/${campsiteId}`, {
-        method: "DELETE"
-    })
-}
+// function deleteCampSite(campsite) {
+//     let campsiteId = campsite.id
+//     fetch(`http://localhost:3000/campsites/${campsiteId}`, {
+//         method: "DELETE"
+//     })
+// }
 
 function displayCampSiteInfo(campsite) {
     // debugger
