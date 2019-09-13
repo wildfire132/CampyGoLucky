@@ -23,14 +23,14 @@ end
 
 50.times do |trip|
     tripname = Faker::Games::ElderScrolls.city
-    new_trip = Trip.new(name: tripname, user: (User.all.sample), start_date: Time.now, start_location: Faker::Address.city)
+    new_trip = Trip.new(name: tripname, user: (User.all.sample), start_date: Time.now, start_location: Faker::Address.city, description: Faker::Lorem.sentence)
     new_trip.campsites = []
     new_trip.save
 end
 
 50.times do |campsite|
     campname = Faker::Games::ElderScrolls.last_name
-    new_camp = Campsite.create(name: campname)
+    new_camp = Campsite.create(name: campname, img: Faker::Placeholdit.image)
     Trip.all.sample.campsites << new_camp
 end
 

@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2019_09_09_223110) do
     t.string "name"
     t.string "latitude"
     t.string "longitude"
+    t.string "url"
+    t.string "img"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -44,6 +46,7 @@ ActiveRecord::Schema.define(version: 2019_09_09_223110) do
     t.string "name"
     t.string "start_date"
     t.string "start_location"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_trips_on_user_id"
