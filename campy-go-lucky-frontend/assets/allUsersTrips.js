@@ -113,7 +113,7 @@ function displayMyTrips(user){
         cardBody.appendChild(tripDesc)
         card.appendChild(cardImg)
         card.appendChild(cardBody)
-        card.appendChild(infoBtn)
+        // card.appendChild(infoBtn)
         card.appendChild(editTrip)
         card.appendChild(directionsBtn)
         card.appendChild(tripInfoList)

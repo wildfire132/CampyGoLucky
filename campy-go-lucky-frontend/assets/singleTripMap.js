@@ -184,6 +184,7 @@ function displayMarkers(trip, markersArray) {
 
             let showWeatherBtn = document.createElement("button")
             showWeatherBtn.innerText = "Forecast"
+            showWeatherBtn.classList.add("btn", "btn-outline-info")
             showWeatherBtn.setAttribute("data-toggle","modal")
             showWeatherBtn.setAttribute("data-target","#exampleModal")
             showWeatherBtn.onclick = e =>{
@@ -192,23 +193,24 @@ function displayMarkers(trip, markersArray) {
 
             let showCampBtn = document.createElement("button")
             showCampBtn.innerText = "Camp Info"
+            showCampBtn.classList.add("btn", "btn-outline-warning")
             showCampBtn.setAttribute("data-toggle","modal")
             showCampBtn.setAttribute("data-target","#exampleModal")
             showCampBtn.onclick = e =>{
                 showCampInfo(marker)
             }
 
-            let grabDiv = document.getElementById("firstHeading")
-            let docBreak = document.createElement('br')
-            // let grabDiv = document.querySelector(".gm-style-iw")
+            // let grabDiv = document.getElementById("firstHeading")
+            // let docBreak = document.createElement('br')
+            // grabDiv = document.querySelector(".gm-style-iw")
             // debugger
-            grabDiv.append(docBreak)
+            // grabDiv.append(docBreak)
+            grabDiv = document.querySelector(".gm-style-iw")
             grabDiv.append(showCampBtn)
             // grabDiv.append(showInfoBtn)
             grabDiv.append(showWeatherBtn)
             // debugger
-            grabDiv = document.querySelector(".gm-style-iw")
-            grabDiv.prepend(addCampgroundBtn)
+            grabDiv.append(addCampgroundBtn)
         }
     }
 })
@@ -282,7 +284,7 @@ function displayCampSites(trip, centerPointHash, user) {
         // debugger
         let campLink = document.createElement("a")
         campLink.classList.add("info")
-        campLink.style = "color:white"
+        campLink.style = "color:burlywood"
         campLink.href = campsite.url
         campLink.target = "_blank"
         campLink.innerText = campsite.name
@@ -293,7 +295,7 @@ function displayCampSites(trip, centerPointHash, user) {
         // }
 
         let dltBtn = document.createElement("button")
-        dltBtn.classList.add("btn", "btn-outline-danger")
+        dltBtn.classList.add("btn", "btn-outline-warning")
         dltBtn.innerText = "Delete Campsite"
         dltBtn.onclick = e => {
             deleteCampSite(trip, centerPointHash, user, campsite)

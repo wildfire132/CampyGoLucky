@@ -31,7 +31,7 @@ class WeathersController < ApplicationController
         icon = "https://i.imgur.com/vhbGJo3.png" 
     end
 
-    byebug
+    # byebug
 
     @currentResults = {
         current_time: Time.at(response_hash["currently"]["time"]).to_datetime.strftime("%a %m/%d/%Y"),
