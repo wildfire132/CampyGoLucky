@@ -22,7 +22,12 @@ body {
 }
 
 header#burly nav.navbar {
-    background-color: burlywood;
+    background-color: #4d351f;
+}
+
+.logo {
+    color: burlywood;
+    display: inline;
 }
 
 .info {
@@ -76,9 +81,8 @@ footer p {
   }
 
   #camp {
-      border: 1px solid black;
       border-radius: 1rem;
-      background-color: burlywood;
+      background-color: #4d351f;
       padding: 1rem;
       margin-top: 1rem;
   }
