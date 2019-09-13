@@ -1,3 +1,45 @@
+/* ## frosted glass ## */
+.glass {
+    background-color: burlywood;
+    /* height: 100%;
+    width: 100%; */
+    /* filter: blur(2px); */
+    /* clip-path: inset(10em);
+    display: flex;
+     justify-content: center;
+  align-items: center; */
+}
+
+/* .drop-shadow {
+    height: 100%;
+  width: 100%;
+    filter: drop-shadow(0px 20px 10px rbga(0, 0, 0, 0.30));
+    display:flex;
+    justify-content: center;
+  align-items: center;
+}
+.drop-shadow:before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 10em;
+    height: calc(100%-20em);
+    width: calc(100% - 20em);
+    border-top: 2px solid rgba(225, 225, 225, 0.2);
+    border-left: 1px solid rgba(225,225,225, 0.1);
+     border-right: 1px solid rgba(225,225,225, 0.3);
+     z-index: 2; 
+}
+
+.drop-shadow > span {
+position: absolute;
+    z-index: 5;
+    color: white;
+    font-size: 4em;
+    letter-spacing: 0.75em;
+    padding-left: 0.375em;
+} */
+
 .cards {
     /* background-image: url("./forestroad2.jpg"); */
     display: flex;
