@@ -4,7 +4,7 @@ Created by Iris Silverman, Brittan Fairchild, and Katana Tran
 
 We wanted to create an app that would let you plan a hiking and camping themed road trip to anywhere in the United States.
 
-Demo: "https://drive.google.com/open?id=1PlOTS7QovjViFTft6VskEhcI7FceJCJG"
+Demo: https://drive.google.com/open?id=1PlOTS7QovjViFTft6VskEhcI7FceJCJG
 
 Features
 
