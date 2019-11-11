@@ -66,13 +66,6 @@ initMap = (trip, centerPointHash,user) =>{
         getMarkers(e.latLng, trip)
     });
 
-        // getWeatherInfo(marker)
-
-        // getWeatherInfo(marker)
-
-
-    // map.panTo(position)
-    // debugger
     displayCampSites(trip, centerPointHash, user)
     
 }
@@ -105,9 +98,7 @@ function getMarkers(latLong, trip) {
 
 
 function displayMarkers(trip, markersArray) {
-    // debugger
     markersArray.forEach(function (marker) {
-        // debugger
     contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +

@@ -47,8 +47,13 @@ class CampgroundsController < ApplicationController
     #   end
     def get_campground_info
         mechanize = Mechanize.new
+        mechanize.user_agent_alias = 'Mac Safari'
+        mechanize.request_headers = {"Accept-Encoding" => ""}
+        mechanize.ignore_bad_chunking = true
+        mechanize.follow_meta_refresh = true
+
         page = mechanize.get("#{params["info_url"]}")
-    
+        
         camp_info = page.search("div.description")
         
         activities = page.search("div.activity div")
@@ -58,7 +63,6 @@ class CampgroundsController < ApplicationController
         puts ""
     
         puts "Activities"
-
         array_of_activities = []
         activities.each do |activity|
             array_of_activities << activity.text
